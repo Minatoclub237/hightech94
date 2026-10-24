@@ -1,5 +1,5 @@
 import {
-  gsap, data, reduce, SHOP, curl, eur, price, short, pad2, esc, ph, I, catOf,
+  gsap, data, reduce, SHOP, curl, eur, price, short, pad2, esc, ph, I, catOf, payIcons,
   frame, layer, swap, split, marquee, carouselHTML, initCarousel, reveal, shell,
 } from './shared.js';
 
@@ -32,7 +32,7 @@ const SH = ['', 'shape-d', 'shape-e', 'shape-b'];
 const rows = [
   ['Livraison', 'Délai estimé : 10 à 15 jours. Les frais sont indiqués avant le paiement. Livraison dans 41 pays.', '/page/?p=shipping-policy', 'Politique de livraison'],
   ['Retours', 'Vous pouvez demander un retour dans les 30 jours suivant la livraison.', '/page/?p=refund-policy', 'Politique de retour'],
-  ['Paiement sécurisé', 'Visa, Mastercard, Amex et Maestro, avec 3-D Secure. Le paiement se fait sur la caisse Shopify.', '', ''],
+  ['Paiement sécurisé', 'Le paiement se fait sur la caisse sécurisée Shopify.', '', '', payIcons()],
 ];
 
 shell(`
@@ -59,9 +59,9 @@ shell(`
       <button class="pill pill--fill buy__add"></button>
     </div>
     <a class="pill buy__now" data-in href="#">Commander maintenant ${I.arrow}</a>
-    <ul class="pdp__rows" data-in>${rows.map(([t, txt, href, l]) => `
+    <ul class="pdp__rows" data-in>${rows.map(([t, txt, href, l, extra = '']) => `
       <li class="row"><button class="row__h" aria-expanded="false"><span class="row__t">${t}</span><span class="circ sm">${I.arrow}</span></button>
-      <div class="row__b"><div><div class="row__in"><div><p>${txt}</p>${href ? `<a class="mono" href="${href}">[${l}]</a>` : ''}</div></div></div></div></li>`).join('')}</ul>
+      <div class="row__b"><div><div class="row__in"><div><p>${txt}</p>${extra}${href ? `<a class="mono" href="${href}">[${l}]</a>` : ''}</div></div></div></div></li>`).join('')}</ul>
   </div>
 </section>
 

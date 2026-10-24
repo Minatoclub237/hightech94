@@ -9,6 +9,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import data from './data.json';
+import payments from './payments.json'; // the store's own payment icons (Shopify storefront)
 
 gsap.registerPlugin(ScrollTrigger);
 export { gsap, ScrollTrigger, data };
@@ -25,6 +26,9 @@ export const short = (p) => data[p].title.split(/ [–-] |, /)[0];
 export const count = (t) => data.filter((d) => d.type === t).length;
 export const pad2 = (n) => String(n).padStart(2, '0');
 export const esc = (s) => String(s).replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
+const PAY = ['visa', 'master', 'american_express', 'cartes_bancaires', 'paypal', 'apple_pay', 'shopify_pay', 'klarna'];
+export const payIcons = () => `<ul class="pay" aria-label="Moyens de paiement acceptés">${PAY
+  .map((id) => payments.find((p) => p.id === id)).filter(Boolean).map((p) => `<li>${p.svg}</li>`).join('')}</ul>`;
 const PHOTOS = new Set(data.flatMap((d) => d.photo.map((i) => d.images[i])));
 export const ph = (src) => (PHOTOS.has(src) ? 'class="ph"' : '');
 
@@ -248,6 +252,7 @@ const header = `
     <div class="cart__foot">
       <div class="cart__sum"><span class="mono">Sous-total</span><b>0 €</b></div>
       <p class="cart__note">Livraison estimée : 10 à 15 jours. Frais calculés à l’étape suivante, paiement sécurisé par Shopify.</p>
+      ${payIcons()}
       <a class="pill pill--fill cart__go" href="#">Passer commande ${I.arrow}</a>
     </div>
   </div>
@@ -260,7 +265,7 @@ const footer = `
       <p class="mono lab">Contact</p>
       <h2 class="h2 foot__h" data-split>La tech connectée<br><span class="und"></span>livrée chez vous</h2>
       <form class="foot__form"><input name="m" placeholder="Écrivez-nous un message" aria-label="Votre message" autocomplete="off"><button class="circ inv" aria-label="Envoyer">${I.arrow}</button></form>
-      <div class="foot__pay"><p class="mono lab">Paiement sécurisé</p><p>Visa · Mastercard · Amex · Maestro — 3-D Secure</p></div>
+      <div class="foot__pay"><p class="mono lab">Paiement sécurisé</p>${payIcons()}</div>
     </div>
     <div class="foot__info" data-blur>
       <div><p class="mono lab">Localisation</p><p>Fontenay-sous-Bois (94)<br>France</p></div>

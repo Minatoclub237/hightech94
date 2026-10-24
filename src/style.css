@@ -221,6 +221,9 @@ figcaption { margin-top: 12px; }
 .circ.inv { background: #fff; color: var(--black); border-color: #fff; }
 .circ.inv:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 .foot__pay { margin-top: auto; padding-top: 5vw; }
+.pay { display: flex; flex-wrap: wrap; gap: 7px; }
+.pay li { display: grid; background: #fff; border-radius: 4px; } /* Klarna's icon has no card of its own */
+.pay svg { width: 42px; height: 27px; fill: #000; stroke: none; } /* undo the line-icon defaults */
 .foot__info { grid-column: 8 / 13; display: grid; grid-template-columns: 1fr 1fr; gap: 34px var(--gap); }
 .foot__info a:hover, .foot__menus a:hover { color: var(--accent); }
 .foot__menus { grid-column: 8 / 13; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
