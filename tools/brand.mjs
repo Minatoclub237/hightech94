@@ -34,6 +34,8 @@ const ww = (await sharp(word).metadata()).width;
 await sharp({ create: { width: mw + 18 + ww + 26, height: 180, channels: 3, background: '#fff' } })
   .composite([{ input: mono, left: 0, top: 0 }, { input: word, left: mw + 18, top: 58 }])
   .webp({ quality: 90 }).toFile(out('brand/lockup-light.webp'));
+// Shopify checkout header logo (Settings → Checkout → Customize → Logo)
+await sharp(out('brand/lockup-light.webp')).resize({ width: 1000 }).png().toFile(out('brand/checkout-logo.png'));
 await (await whiten(MONO, 1.25, -62)).resize(192, 192, { fit: 'cover' }).webp({ quality: 90 }).toFile(out('brand/mark-light.webp'));
 
 // footer + page curtain: the full stacked logo on its black backdrop

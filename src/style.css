@@ -233,7 +233,7 @@ figcaption { margin-top: 12px; }
 .foot__usp span { color: var(--mute); }
 .foot__main { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gap); padding: 5vw 0 4vw; }
 .foot__brand { grid-column: 1 / 6; }
-.foot__logo { display: block; width: min(300px, 72%); margin-left: -18px; }
+.foot__logo { display: block; width: min(300px, 72%); margin-left: -18px; background: var(--black); } /* backdrop for `lighten` inside the blurred (isolated) block */
 .foot__logo img { width: 100%; }
 .foot__lead { max-width: 380px; margin: 4px 0 30px; color: #bdbdbd; font-size: 18px; line-height: 1.5; }
 .foot__mail { display: inline-block; margin-top: 18px; padding-bottom: 2px; border-bottom: 1px solid #3a3a3a; transition: color .3s, border-color .3s; }
@@ -261,6 +261,19 @@ figcaption { margin-top: 12px; }
 .pay svg { width: 42px; height: 27px; fill: #000; stroke: none; } /* undo the line-icon defaults */
 .foot__bot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 3vw; padding-top: 22px; border-top: 1px solid #1f1f1f; color: var(--mute); }
 .foot__bot .pay { margin-left: auto; }
+
+/* ---------- Google rating, contact, legal ---------- */
+.gstar { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; }
+.gstar__s { color: #fbbc04; letter-spacing: 2px; }
+.gstar b { font-weight: 600; }
+.gstar span:last-child { transition: color .3s; }
+.gstar:hover span:last-child { color: var(--accent); }
+.foot__g { margin-top: 22px; color: #cfcfcf; }
+.spot__g { grid-column: 7 / 12; justify-self: end; }
+.foot__find { display: grid; gap: 8px; margin-top: 12px; color: #cfcfcf; }
+.foot__usp a, .foot__bot a { transition: color .3s; }
+.foot__usp a:hover, .foot__bot a:hover { color: var(--accent); }
+.todo { padding: 0 6px; border-radius: 4px; background: #fff1e8; color: #b3410e; }
 
 /* ---------- shared controls ---------- */
 .pill--fill { background: var(--ink); color: #fff; }
@@ -448,6 +461,7 @@ figcaption { margin-top: 12px; }
   .spot__who { grid-column: 1; display: flex; align-items: center; gap: 16px; }
   .spot__img { order: -1; width: 96px; margin: 0; flex: none; }
   .spot__main { grid-column: 1; padding: 28px 0 0; }
+  .spot__g { grid-column: 1 / -1; grid-row: 2; justify-self: start; margin-top: 14px; }
   .spot__bot { grid-template-columns: auto 1fr auto; margin-top: 32px; }
   .spot__bot .mono { grid-column: 2; text-align: center; }
   .spot__bot .spot__q { display: none; }

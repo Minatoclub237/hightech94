@@ -1,16 +1,23 @@
-// Usage: node tools/fetch-images.mjs <products.json> <rawDir>
-// Downloads up to 8 photos per product (WebP in public/img), writes src/data.json
-// (prices, options, variants, cleaned description) and the store policies to src/policies.json.
+// Usage: node tools/fetch-images.mjs [products.json] [rawDir]
+// Without arguments it downloads the live feed from the Shopify store.
+// Downloads up to 8 photos per product (WebP in public/img), orders them with tools/curation.json
+// (clean product shots first), writes src/data.json and the store policies to src/policies.json.
 import fs from 'node:fs/promises';
+import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
 
 const SHOP = 'https://hightech94-store.myshopify.com';
-const [, , feed, rawDir] = process.argv;
+const [, , feed, rawArg] = process.argv;
+const rawDir = rawArg ?? path.join(os.tmpdir(), 'ht94-raw');
 const root = path.resolve(import.meta.dirname, '..');
 const outImg = path.join(root, 'public/img');
-const { products } = JSON.parse(await fs.readFile(feed, 'utf8'));
+const { products } = feed
+  ? JSON.parse(await fs.readFile(feed, 'utf8'))
+  : await (await fetch(`${SHOP}/products.json?limit=250`)).json();
+const curation = JSON.parse(await fs.readFile(path.join(root, 'tools/curation.json'), 'utf8'));
 await fs.mkdir(rawDir, { recursive: true });
+await fs.mkdir(outImg, { recursive: true });
 
 const strip = (html) => html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 // keep text markup only: no scripts, styles, attributes or other tags
@@ -25,24 +32,26 @@ const data = [];
 for (const p of products) {
   if (!p.product_type) continue; // "Shipping Protection" add-on
   const n = data.length;
-  const pics = p.images.slice(0, 8);
-  const imgs = [];
-  const photo = []; // indices of photos with a coloured backdrop (shown full-bleed, not on the grey card)
-  for (const [i, im] of pics.entries()) {
-    const name = `${p.handle.slice(0, 40)}-${i}.webp`;
+  const shots = [];
+  for (const [j, im] of p.images.slice(0, 8).entries()) {
+    const name = `${p.handle.slice(0, 40)}-${j}.webp`;
     const out = path.join(outImg, name);
     if (!(await fs.stat(out).catch(() => null))) {
-      const raw = path.join(rawDir, `${n}-${i}`);
+      const raw = path.join(rawDir, `${n}-${j}`);
       const res = await fetch(`${im.src}${im.src.includes('?') ? '&' : '?'}width=1200`);
       await fs.writeFile(raw, Buffer.from(await res.arrayBuffer()));
       await sharp(raw).resize(1000, 1000, { fit: 'inside', withoutEnlargement: true }).webp({ quality: 84 }).toFile(out);
     }
-    imgs.push(`/img/${name}`);
+    // photo with a coloured backdrop (shown full-bleed) vs cut-out on white (shown on the grey card)
     const { data: px, info } = await sharp(out).resize(40, 40, { fit: 'fill' }).raw().toBuffer({ resolveWithObject: true });
     const at = (x, y) => [...px.subarray((y * 40 + x) * info.channels, (y * 40 + x) * info.channels + 3)];
-    if ([at(1, 1), at(38, 1), at(1, 38), at(38, 38)].filter((c) => Math.min(...c) < 225).length >= 2) photo.push(i);
+    const photo = [at(1, 1), at(38, 1), at(1, 38), at(38, 38)].filter((c) => Math.min(...c) < 225).length >= 2;
+    shots.push({ id: im.id, src: `/img/${name}`, cdn: im.src, photo });
   }
-  const ids = pics.map((im) => im.id);
+  // curated order (new products not yet curated keep the store's order)
+  const order = curation[p.handle]?.length === shots.length ? curation[p.handle] : shots.map((s, i) => i);
+  const pics = order.map((i) => shots[i]);
+  const ids = pics.map((s) => s.id);
   const prices = p.variants.map((v) => +v.price);
   const h2 = p.body_html.match(/<h2[^>]*>(.*?)<\/h2>/is);
   const p1 = p.body_html.match(/<p[^>]*>(.*?)<\/p>/is);
@@ -59,14 +68,17 @@ for (const p of products) {
     variants: p.variants.map((v) => ({
       id: v.id,
       title: v.title,
+      sku: v.sku || '',
       price: +v.price,
       compare: v.compare_at_price ? +v.compare_at_price : 0,
       available: v.available,
       opts: [v.option1, v.option2, v.option3].filter((o) => o !== null),
       img: v.featured_image ? ids.indexOf(v.featured_image.id) : -1,
     })),
-    images: imgs,
-    photo,
+    images: pics.map((s) => s.src),
+    cdn: pics.map((s) => s.cdn),
+    photo: pics.flatMap((s, i) => (s.photo ? [i] : [])),
+    updated: p.updated_at,
   });
 }
 await fs.writeFile(path.join(root, 'src/data.json'), JSON.stringify(data));

@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite --port 5950 --strictPort",
     "build": "vite build",
-    "preview": "vite preview --port 5950 --strictPort"
+    "preview": "vite preview --port 5950 --strictPort",
+    "predev": "node tools/prerender.mjs",
+    "prebuild": "node tools/prerender.mjs",
+    "sync": "node tools/fetch-images.mjs && node tools/prerender.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

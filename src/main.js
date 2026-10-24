@@ -1,15 +1,15 @@
 import {
-  gsap, ScrollTrigger, data, reduce, img, purl, curl, price, short, count, pad2, I, CATS,
+  gsap, ScrollTrigger, data, reduce, img, purl, curl, price, priceTag, short, gstar, count, pad2, I, CATS,
   sliced, frame, layer, swap, split, marquee, carouselHTML, initCarousel, reveal, onResize, shell,
 } from './shared.js';
 
-const SPOT = [[0, 1], [1, 1], [2, 1], [4, 1], [5, 2], [8, 0]];
-const CARDS = [[9, 1], [6, 1], [13, 1], [12, 1], [15, 0], [11, 1], [24, 1], [3, 0], [7, 0], [21, 0], [20, 0], [10, 1]];
+const SPOT = [[0, 1], [1, 1], [2, 0], [4, 0], [5, 0], [8, 0]];
+const CARDS = [[9, 0], [6, 1], [13, 0], [12, 0], [15, 0], [11, 0], [24, 0], [3, 0], [7, 0], [21, 0], [20, 0], [10, 0]];
 const COLS = [
-  ['Maison & sécurité', 'Caméras WiFi, prise connectée, ampoules RGB : la maison se pilote depuis le téléphone.', 'Sécurité connectée', [26, 2], [23, 2]],
+  ['Maison & sécurité', 'Caméras WiFi, prise connectée, ampoules RGB : la maison se pilote depuis le téléphone.', 'Sécurité connectée', [26, 0], [23, 0]],
   ['Route & recharge', 'Supports magnétiques et chargeurs sans fil : en voiture comme au bureau, tout tient et tout charge.', 'Charge et alimentation', [15, 0], [13, 1]],
-  ['Bureau & ergonomie', 'Supports ventilés, souris verticales, tables pliantes : travailler mieux, sans mal de dos.', 'Bureau et informatique', [4, 1], [8, 0]],
-  ['Air & bien-être', 'Purificateurs à ions négatifs pour la voiture, la chambre ou à porter autour du cou.', 'Air et ambiance', [19, 0], [21, 0]],
+  ['Bureau & ergonomie', 'Supports ventilés, souris verticales, tables pliantes : travailler mieux, sans mal de dos.', 'Bureau et informatique', [4, 0], [8, 0]],
+  ['Air & bien-être', 'Purificateurs à ions négatifs pour la voiture, la chambre ou à porter autour du cou.', 'Air et ambiance', [19, 1], [21, 0]],
 ];
 const firstSentence = (s) => s.split(/(?<=[.!?])\s/)[0];
 
@@ -29,7 +29,7 @@ const lenis = shell(`
   <p class="hero__stat" data-in><strong>41</strong><span class="mono">pays livrés</span></p>
   <div class="hero__ch hero__ch--2"><p class="mono">[Kayrox Pro] — vue éclatée</p><p class="hero__chT">Cardio · SpO2 · Appels Bluetooth</p></div>
   <div class="hero__ch hero__ch--3l"><p class="mono">[Nouveauté 2026]</p><p class="hero__name">Montre connectée Kayrox Pro</p></div>
-  <div class="hero__ch hero__ch--3r"><p class="hero__price">${price(1)}</p><a class="pill pill--fill" href="${purl(1)}">Découvrir la montre ${I.arrow}</a></div>
+  <div class="hero__ch hero__ch--3r"><p class="hero__price">${priceTag(1)}</p><a class="pill pill--fill" href="${purl(1)}">Découvrir la montre ${I.arrow}</a></div>
   <button class="hero__scroll mono" aria-label="Faire défiler la vidéo">Faites défiler<span></span></button>
 </section>
 
@@ -38,14 +38,14 @@ const lenis = shell(`
 
 <section class="moments" id="univers">
   <h2 class="h2 moments__h" data-split>Tout - connecté<br>en un geste ©26</h2>
-  <a class="moments__thumb" href="${purl(2)}" data-blur aria-label="${short(2)}">${frame(img(2, 2), short(2))}</a>
+  <a class="moments__thumb" href="${purl(2)}" data-blur aria-label="${short(2)}">${frame(img(2, 4), short(2))}</a>
   <span class="cross moments__cross" data-blur>${I.plus}</span>
   <div class="moments__cta" data-blur><span class="dot"></span><a class="pill" href="${purl(0)}">En savoir plus ${I.arrow}</a></div>
   <figure class="moments__a" data-blur><a href="${purl(0)}">${sliced(img(0, 0), 'shape-a', short(0))}</a><figcaption class="mono">©Lunettes caméra 8 MP — 2026</figcaption></figure>
   <p class="moments__p" data-blur>Filmez, appelez, traduisez : la technologie se fait discrète et tient dans vos lunettes.</p>
-  <p class="moments__price" data-blur>(${price(0)})</p>
-  <figure class="moments__b" data-blur><a href="${purl(7)}">${frame(img(7, 2), short(7), 'shape-b', 'data-par')}</a><figcaption class="mono">©Souris verticale sans fil — 2026</figcaption></figure>
-  <p class="moments__pct" data-blur>(${price(7)})</p>
+  <p class="moments__price" data-blur>(${priceTag(0)})</p>
+  <figure class="moments__b" data-blur><a href="${purl(7)}">${frame(img(7, 1), short(7), 'shape-b', 'data-par')}</a><figcaption class="mono">©Souris verticale sans fil — 2026</figcaption></figure>
+  <p class="moments__pct" data-blur>(${priceTag(7)})</p>
 </section>
 
 <section class="cats" id="categories" data-pin>
@@ -53,7 +53,7 @@ const lenis = shell(`
     <p>Chaque objet a sa place : au bureau, en voiture, à la maison. Faites défiler pour choisir un univers.</p>
     <a class="pill cats__cta" href="${curl(CATS[0][0])}">Voir les produits ${I.arrow}</a>
   </div>
-  <a class="cats__img shape-c" href="${curl(CATS[0][0])}" data-blur aria-label="Voir la catégorie">${CATS.map(([, l, [p, i], , crop]) => layer(img(p, i), l, crop)).join('')}</a>
+  <a class="cats__img shape-c" href="${curl(CATS[0][0])}" data-blur aria-label="Voir la catégorie">${CATS.map(([, l, [p, i]]) => layer(img(p, i), l)).join('')}</a>
   <div class="cats__r" data-blur>
     <div class="drum"><ol class="drum__in">${CATS.map(([t, l], i) =>
       `<li><a href="${curl(t)}"><span class="mono">[${pad2(i + 1)}]</span>${l} (${count(t)})</a></li>`).join('')}</ol></div>
@@ -66,7 +66,7 @@ ${marquee(false)}
 <section class="spot" id="coups-de-coeur">
   <div class="spot__top" data-blur>
     <p class="spot__count"><b>01</b><small>/${pad2(SPOT.length)}</small></p>
-    <p class="mono">[Coup de cœur]</p>
+    <p class="mono">[Coup de cœur]</p>${gstar('spot__g')}
     <span class="spot__q" aria-hidden="true">“</span>
   </div>
   <div class="spot__body" data-blur>
@@ -212,7 +212,7 @@ function fillSpot() {
   spot.name.textContent = `[${short(p)}]`;
   spot.type.textContent = CATS.find((c) => c[0] === d.type)[1];
   spot.text.textContent = `${d.tagline}. ${firstSentence(d.excerpt)}`;
-  spot.meta.innerHTML = `<span class="acc">${price(p)}</span><span>${n} déclinaison${n > 1 ? 's' : ''}</span><a href="${purl(p)}">Voir le produit</a>`;
+  spot.meta.innerHTML = `<span class="acc">${priceTag(p)}</span><span>${n} déclinaison${n > 1 ? 's' : ''}</span><a href="${purl(p)}">Voir le produit</a>`;
   spot.img.href = purl(p);
   spot.img.insertAdjacentHTML('beforeend', layer(img(p, k), short(p)));
   const lays = [...spot.img.children];

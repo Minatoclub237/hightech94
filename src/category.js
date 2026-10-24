@@ -1,9 +1,10 @@
 import {
-  gsap, ScrollTrigger, data, reduce, img, purl, curl, price, short, count, ph, CATS, catOf,
+  gsap, ScrollTrigger, data, reduce, img, purl, curl, price, priceTag, short, count, ph, CATS, catOf,
   frame, marquee, reveal, shell,
 } from './shared.js';
 
-let type = new URLSearchParams(location.search).get('t') ?? '';
+const slug = location.pathname.match(/\/categorie\/([^/]+)/)?.[1];
+let type = CATS.find((c) => c[4] === slug)?.[0] ?? new URLSearchParams(location.search).get('t') ?? '';
 if (!catOf(type)) type = '';
 let sort = 'rel';
 const SHAPES = ['', 'shape-d', 'shape-e', 'shape-b'];
@@ -34,7 +35,7 @@ function card(i, k) {
     <div class="frame pcard__img ${SHAPES[k % 4]}"><img ${ph(img(i))} src="${img(i)}" alt="${short(i)}" loading="lazy" draggable="false">${d.images[1] ? `<span class="pcard__alt"><img ${ph(img(i, 1))} src="${img(i, 1)}" alt="" loading="lazy" draggable="false"></span>` : ''}</div>
     <p class="mono pcard__type">[${catOf(d.type)[1]}]</p>
     <p class="pcard__t">${short(i)}</p>
-    <p class="pcard__p">${price(i)}${v > 1 ? ` <span>· ${v} déclinaisons</span>` : ''}</p>
+    <p class="pcard__p">${priceTag(i)}${v > 1 ? ` <span>· ${v} déclinaisons</span>` : ''}</p>
   </div></a>`;
 }
 function render(first) {

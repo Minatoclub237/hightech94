@@ -1,10 +1,11 @@
 import {
-  gsap, data, reduce, SHOP, curl, eur, price, short, pad2, esc, ph, I, catOf, payIcons,
+  gsap, data, reduce, SHOP, curl, eur, price, short, pad2, esc, ph, I, catOf, payIcons, gstar, pagePath, live,
   frame, layer, swap, split, marquee, carouselHTML, initCarousel, reveal, shell,
 } from './shared.js';
 
 const OPT = { color: 'Couleur', colour: 'Couleur', size: 'Taille', style: 'Style', type: 'Type', model: 'Modèle', material: 'Matière', 'ships from': 'Expédition' };
-let pi = data.findIndex((d) => d.handle === new URLSearchParams(location.search).get('p'));
+const handle = location.pathname.match(/\/produit\/([^/]+)/)?.[1] ?? new URLSearchParams(location.search).get('p');
+let pi = data.findIndex((d) => d.handle === handle);
 if (pi < 0) pi = 0;
 const d = data[pi];
 const cat = catOf(d.type);
@@ -30,9 +31,10 @@ const facts = [
 const SH = ['', 'shape-d', 'shape-e', 'shape-b'];
 
 const rows = [
-  ['Livraison', 'Délai estimé : 10 à 15 jours. Les frais sont indiqués avant le paiement. Livraison dans 41 pays.', '/page/?p=shipping-policy', 'Politique de livraison'],
-  ['Retours', 'Vous pouvez demander un retour dans les 30 jours suivant la livraison.', '/page/?p=refund-policy', 'Politique de retour'],
+  ['Livraison', 'Délai estimé : 10 à 15 jours. Les frais sont indiqués avant le paiement. Livraison dans 41 pays.', pagePath('shipping-policy'), 'Politique de livraison'],
+  ['Retours', 'Vous pouvez demander un retour dans les 30 jours suivant la livraison.', pagePath('refund-policy'), 'Politique de retour'],
   ['Paiement sécurisé', 'Le paiement se fait sur la caisse sécurisée Shopify.', '', '', payIcons()],
+  ['Avis clients', 'Notre boutique est notée 5,0 sur 5 sur Google.', '', '', gstar()],
 ];
 
 shell(`
@@ -158,6 +160,7 @@ document.querySelectorAll('[data-dq]').forEach((b) => b.addEventListener('click'
 }));
 add.addEventListener('click', () => { const v = match(sel); if (v) window.addToCart(v.id, q); });
 update(false);
+live.then(() => update(false)); // live price and stock from the store
 
 document.querySelectorAll('.pdp__rows .row').forEach((r) => r.querySelector('.row__h').addEventListener('click', () => {
   const open = !r.classList.contains('is-open');

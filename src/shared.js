@@ -14,15 +14,38 @@ import payments from './payments.json'; // the store's own payment icons (Shopif
 gsap.registerPlugin(ScrollTrigger);
 export { gsap, ScrollTrigger, data };
 
-export const SHOP = 'https://hightech94-store.myshopify.com';
-export const EMAIL = 'sgueblaoui@gmail.com';
+import { SHOP, BIZ, LEGAL, CATS, POLICY_KEYS, eur, shortTitle, productPath, catPath, pagePath } from './catalog.js';
+
+export { SHOP, BIZ, LEGAL, CATS, POLICY_KEYS, eur, pagePath };
+export const EMAIL = BIZ.email;
 export const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 export const img = (p, i = 0) => data[p].images[i] ?? data[p].images[0];
-export const purl = (p) => `/produit/?p=${data[p].handle}`;
-export const curl = (t) => (t ? `/categorie/?t=${encodeURIComponent(t)}` : '/categorie/');
-export const eur = (n) => n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: n % 1 ? 2 : 0 });
-export const price = (p) => (data[p].min === data[p].max ? eur(data[p].min) : `dès ${eur(data[p].min)}`);
-export const short = (p) => data[p].title.split(/ [–-] |, /)[0];
+export const purl = (p) => productPath(data[p].handle);
+export const curl = (t) => catPath(t);
+const soldOut = (p) => data[p].variants.every((v) => !v.available);
+export const price = (p) => (soldOut(p) ? 'Épuisé' : data[p].min === data[p].max ? eur(data[p].min) : `dès ${eur(data[p].min)}`);
+export const priceTag = (p) => `<span data-price="${data[p].handle}">${price(p)}</span>`;
+export const short = (p) => shortTitle(data[p].title);
+
+// live prices and stock from the store: the catalogue snapshot only paints the first frame
+export const live = fetch(`${SHOP}/products.json?limit=250`).then((r) => r.json()).then(({ products }) => {
+  for (const p of products) {
+    const d = data.find((x) => x.handle === p.handle);
+    if (!d) continue;
+    for (const v of p.variants) {
+      const dv = d.variants.find((x) => x.id === v.id);
+      if (dv) Object.assign(dv, { price: +v.price, compare: v.compare_at_price ? +v.compare_at_price : 0, available: v.available });
+    }
+    const prices = d.variants.map((v) => v.price);
+    d.min = Math.min(...prices);
+    d.max = Math.max(...prices);
+  }
+  document.querySelectorAll('[data-price]').forEach((el) => {
+    const i = data.findIndex((x) => x.handle === el.dataset.price);
+    if (i >= 0) el.textContent = price(i);
+  });
+  return true;
+}).catch(() => false);
 export const count = (t) => data.filter((d) => d.type === t).length;
 export const pad2 = (n) => String(n).padStart(2, '0');
 export const esc = (s) => String(s).replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
@@ -52,18 +75,6 @@ export const I = {
   mail: svg('<rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/>'),
 };
 
-// [product type, label, cover [product, image], description, optional crop on the cover]
-export const CATS = [
-  ['Lunettes connectées', 'Lunettes', [3, 1], 'Appels, musique, photo et traduction : des lunettes qui en font plus.'],
-  ['Objets connectés', 'Montres', [1, 0], 'Une montre connectée complète et un chargeur sans fil à emporter.'],
-  ['Bureau et informatique', 'Bureau', [9, 1], 'Supports, souris verticales et tables pour travailler sans mal de dos.'],
-  ['Charge et alimentation', 'Recharge', [11, 2], 'Chargeurs sans fil et stations 3-en-1 pour garder tout l’équipement chargé.'],
-  ['Accessoires auto', 'Auto', [12, 0], 'Supports magnétiques et chargeurs pour garder le téléphone à portée de vue.'],
-  ['Air et ambiance', 'Air pur', [19, 0], 'Purificateurs à ions négatifs pour la maison, la voiture ou à porter autour du cou.'],
-  ['Sécurité connectée', 'Sécurité', [26, 2], 'Caméras WiFi sans perçage, sur batterie ou cachées dans une ampoule.'],
-  ['Maison connectée', 'Maison', [23, 2], 'Prise connectée et routeur de poche : la maison pilotée depuis le téléphone.'],
-  ['Éclairage connecté', 'Lumière', [27, 0], 'Ampoules RGB pilotables à la voix ou depuis l’application.', 'transform:scale(1.35);transform-origin:50% 75%'],
-];
 export const catOf = (t) => CATS.find((c) => c[0] === t);
 
 // image cut into three horizontal strips (white slits between them)
@@ -99,7 +110,7 @@ export const carouselHTML = (a, b, list, id = '') => `
     <div class="car__nav"><button class="circ sm" data-cprev aria-label="Précédent">${I.back}</button><button class="circ sm" data-cnext aria-label="Suivant">${I.arrow}</button></div>
   </div>
   <div class="car__view" data-blur><div class="car__track">${list.map(([p, i], k) =>
-    `<a class="card" href="${purl(p)}" style="--h:${[0.86, 0.94, 1, 0.88][k % 4]}">${frame(img(p, i), short(p), ['', 'shape-d', 'shape-e', ''][k % 4])}<p class="mono card__cap">[${short(p)}] ${price(p)}</p></a>`).join('')}</div></div>
+    `<a class="card" href="${purl(p)}" style="--h:${[0.86, 0.94, 1, 0.88][k % 4]}">${frame(img(p, i), short(p), ['', 'shape-d', 'shape-e', ''][k % 4])}<p class="mono card__cap">[${short(p)}] ${priceTag(p)}</p></a>`).join('')}</div></div>
   <div class="car__bar"><span></span></div>
 </section>`;
 
@@ -265,13 +276,15 @@ const header = `
 </aside>`;
 
 const li = (h, t) => `<li><a href="${h}">${t}</a></li>`;
+// the real Google rating (no review count or texts: Google only shows a limited view of the listing)
+export const gstar = (cls = '') => `<a class="gstar ${cls}" href="${BIZ.maps}" target="_blank" rel="noopener" aria-label="Noté ${BIZ.rating} sur 5 sur Google — voir et laisser un avis"><span class="gstar__s" aria-hidden="true">★★★★★</span><b>${BIZ.rating}</b><span>sur Google — voir ou laisser un avis ↗</span></a>`;
 const footer = `
 <footer class="foot" id="contact">
   <ul class="foot__usp" data-blur>
     <li>${I.truck}<div><b>Livraison 10 à 15 jours</b><span>Dans 41 pays</span></div></li>
     <li>${I.ret}<div><b>Retours 30 jours</b><span>Après la livraison</span></div></li>
     <li>${I.lock}<div><b>Paiement sécurisé</b><span>Caisse Shopify, 3-D Secure</span></div></li>
-    <li>${I.mail}<div><b>Une question ?</b><span>On vous répond par e-mail</span></div></li>
+    <li>${I.mail}<div><b>Une question ?</b><span><a href="tel:${BIZ.tel}">${BIZ.phone}</a> ou par e-mail</span></div></li>
   </ul>
   <div class="foot__main">
     <div class="foot__brand" data-blur>
@@ -279,17 +292,18 @@ const footer = `
       <p class="foot__lead">Objets connectés et high-tech, choisis un par un et livrés depuis Fontenay-sous-Bois (94).</p>
       <form class="foot__form"><input name="m" placeholder="Écrivez-nous un message" aria-label="Votre message" autocomplete="off"><button class="circ inv" aria-label="Envoyer">${I.arrow}</button></form>
       <a class="foot__mail" href="mailto:${EMAIL}">${EMAIL}</a>
+      ${gstar('foot__g')}
     </div>
     <nav class="foot__cols" data-blur aria-label="Liens du site">
       <div><p class="mono lab">Boutique</p><ul>${li(curl(), 'Tout voir')}${[0, 1, 3, 4, 6, 7].map((c) => li(curl(CATS[c][0]), CATS[c][1])).join('')}</ul></div>
       <div><p class="mono lab">Univers</p><ul>${li('/#univers', 'Tout connecté')}${li('/#categories', 'Catégories')}${li('/#coups-de-coeur', 'Coups de cœur')}${li('/#selection', 'La sélection')}</ul></div>
-      <div><p class="mono lab">Aide</p><ul>${li('/page/?p=shipping-policy', 'Livraison')}${li('/page/?p=refund-policy', 'Retours')}${li('/page/?p=terms-of-service', 'Conditions générales')}${li('/page/?p=privacy-policy', 'Confidentialité')}${li(`mailto:${EMAIL}`, 'Nous écrire')}</ul></div>
-      <div><p class="mono lab">Nous trouver</p><p>Fontenay-sous-Bois (94)<br>France</p><p class="foot__open"><i></i>Ouverte 24 h/24, 7 j/7</p></div>
+      <div><p class="mono lab">Aide</p><ul>${li(pagePath('shipping-policy'), 'Livraison')}${li(pagePath('refund-policy'), 'Retours')}${li(pagePath('terms-of-service'), 'Conditions générales')}${li(pagePath('privacy-policy'), 'Confidentialité')}${li(pagePath('mentions-legales'), 'Mentions légales')}</ul></div>
+      <div><p class="mono lab">Nous trouver</p><p>${BIZ.street}<br>${BIZ.zip} ${BIZ.city}</p><ul class="foot__find"><li><a href="${BIZ.maps}" target="_blank" rel="noopener">Itinéraire ↗</a></li><li><a href="tel:${BIZ.tel}">${BIZ.phone}</a></li></ul><p class="foot__open"><i></i>Boutique en ligne 24 h/24</p></div>
     </nav>
   </div>
   <p class="foot__giant" data-split aria-hidden="true">HIGHTECH94</p>
   <div class="foot__bot">
-    <p class="mono">© 2026 High Tech — Tous droits réservés</p>
+    <p class="mono">© 2026 ${BIZ.name} — <a href="${pagePath('mentions-legales')}">Mentions légales</a></p>
     ${payIcons()}
     <button class="foot__up mono" data-top>Retour en haut ${I.arrow}</button>
   </div>
@@ -404,6 +418,7 @@ export function shell(main) {
     renderCart();
   });
   renderCart();
+  live.then(() => { renderCart(); renderSearch(search.querySelector('input').value); });
   window.addToCart = (id, q = 1) => {
     const it = cart.find((i) => i.id === id);
     if (it) it.q += q; else cart.push({ id, q });
