@@ -107,15 +107,63 @@ ${marquee(true)}
 /* ---------------- hero: exploded-view video scrubbed by the scroll (pinned) ---------------- */
 const hero = document.querySelector('.hero');
 const video = hero.querySelector('.hero__video');
-// whole file in memory so every seek is instant (no range requests while scrubbing)
-fetch(matchMedia('(max-width: 820px)').matches ? '/video/hero-720.mp4' : '/video/hero-1080.mp4')
-  .then((r) => r.blob()).then((b) => { video.src = URL.createObjectURL(b); });
 const vt = { target: 0, cur: -1 };
-gsap.ticker.add(() => {
-  if (video.readyState < 1 || video.seeking) return;
-  const t = Math.min(vt.target * video.duration, video.duration - 0.08); // the very last frame decodes black
-  if (Math.abs(t - vt.cur) > 0.01) { video.currentTime = t; vt.cur = t; }
-});
+if (matchMedia('(max-width: 820px)').matches) {
+  // phones: the same 8 s as 120 WebP frames (15 fps, pre-cropped to the phone framing) on a canvas.
+  // iOS Safari never paints a paused video that has not played, and refuses to play it in Low Power Mode.
+  const N = 120;
+  const canvas = document.createElement('canvas');
+  canvas.className = 'hero__video';
+  canvas.setAttribute('aria-hidden', 'true');
+  video.replaceWith(canvas);
+  const ctx = canvas.getContext('2d');
+  const frames = [];
+  let drawn = -1;
+  const load = (i) => new Promise((done) => {
+    const im = new Image();
+    im.onload = () => { frames[i] = im; done(); };
+    im.onerror = done;
+    im.src = `/video/m/${String(i + 1).padStart(3, '0')}.webp`;
+  });
+  // cover-fit the nearest frame already loaded at or before i
+  const draw = (i) => {
+    let k = i;
+    while (k > 0 && !frames[k]) k--;
+    const im = frames[k];
+    if (!im || k === drawn) return;
+    const s = Math.max(canvas.width / im.width, canvas.height / im.height);
+    ctx.drawImage(im, (canvas.width - im.width * s) / 2, (canvas.height - im.height * s) / 2, im.width * s, im.height * s);
+    drawn = k;
+  };
+  const size = () => {
+    const d = Math.min(devicePixelRatio || 1, 2); // layout size: the intro zoom must not count
+    canvas.width = Math.round(canvas.clientWidth * d);
+    canvas.height = Math.round(canvas.clientHeight * d);
+    drawn = -1;
+    draw(vt.cur < 0 ? 0 : vt.cur);
+  };
+  size();
+  onResize(size);
+  // first frame at once, then the rest in order, six at a time
+  load(0).then(async () => {
+    draw(0);
+    for (let i = 1; i < N; i += 6) await Promise.all(Array.from({ length: Math.min(6, N - i) }, (_, k) => load(i + k)));
+  });
+  gsap.ticker.add(() => {
+    vt.cur = Math.round(vt.target * (N - 1));
+    draw(vt.cur);
+  });
+} else {
+  // whole file in memory so every seek is instant (no range requests while scrubbing)
+  fetch('/video/hero-1080.mp4').then((r) => r.blob()).then((b) => { video.src = URL.createObjectURL(b); });
+  // iPad Safari also paints seeked frames only after one play()
+  video.addEventListener('loadeddata', () => video.play().then(() => video.pause()).catch(() => {}), { once: true });
+  gsap.ticker.add(() => {
+    if (video.readyState < 1 || video.seeking) return;
+    const t = Math.min(vt.target * video.duration, video.duration - 0.08); // the very last frame decodes black
+    if (Math.abs(t - vt.cur) > 0.01) { video.currentTime = t; vt.cur = t; }
+  });
+}
 
 gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.5 })
   .fromTo('.hero__media', { scale: 1.08, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.8 })

@@ -15,7 +15,13 @@ for (const [name, vp] of [['desktop', { width: 1440, height: 900 }], ['mobile', 
   await p.goto('http://localhost:5950/', { waitUntil: 'networkidle0' });
   await wait(3500);
   await p.evaluate(() => scrollTo(0, innerHeight * 1.35)); await wait(1800);
-  r['hero: video time at 45%'] = await p.evaluate(() => document.querySelector('.hero__video').currentTime.toFixed(1) + ' s');
+  // desktop scrubs the video, phones draw the same frames on a canvas
+  r['hero: exploded view at 45%'] = await p.evaluate(() => {
+    const v = document.querySelector('.hero__video');
+    if (v.tagName === 'VIDEO') return `video at ${v.currentTime.toFixed(1)} s`;
+    const d = v.getContext('2d').getImageData(v.width / 2 | 0, v.height * 0.45 | 0, 1, 1).data;
+    return d[3] ? `canvas frame drawn (${d[0]},${d[1]},${d[2]})` : 'canvas EMPTY';
+  });
   r['hero: title hidden, caption shown'] = await p.evaluate(() => `${getComputedStyle(document.querySelector('.hero__l')).opacity} / ${getComputedStyle(document.querySelector('.hero__ch--2')).opacity}`);
   r['hero: labels visible'] = await p.evaluate(() => ['.hero__tag-l', '.hero__tag-r', '.hero__p', '.hero__avatars'].filter((s) => getComputedStyle(document.querySelector(s)).display !== 'none').length + '/4');
   await to('.moments', 200);
