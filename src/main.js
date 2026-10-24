@@ -33,7 +33,7 @@ shell(`
   .map(([ic, c]) => `<a href="${curl(CATS[c][0])}">${I[ic]}${CATS[c][1]}</a>`).join('')}</div>
 
 <section class="moments" id="univers">
-  <h2 class="h2 moments__h" data-blur>Tout - connecté<br>en un geste ©26</h2>
+  <h2 class="h2 moments__h" data-split>Tout - connecté<br>en un geste ©26</h2>
   <a class="moments__thumb" href="${purl(2)}" data-blur aria-label="${short(2)}">${frame(img(2, 2), short(2))}</a>
   <span class="cross moments__cross" data-blur>${I.plus}</span>
   <div class="moments__cta" data-blur><span class="dot"></span><a class="pill" href="${purl(0)}">En savoir plus ${I.arrow}</a></div>
@@ -125,13 +125,13 @@ if (!reduce) {
     .to('.hero__l', { xPercent: -16, ease: 'none' }, 0)
     .to('.hero__r', { xPercent: 16, ease: 'none' }, 0);
 }
-reveal();
 
 /* ---------------- categories: 3D drum + one opaque photo layer per category ---------------- */
 const drum = document.querySelector('.drum');
 const items = [...drum.querySelectorAll('li')];
 const catLays = [...document.querySelectorAll('.cats__img .lay')];
 const catLinks = [document.querySelector('.cats__cta'), document.querySelector('.cats__img')];
+const catLab = document.querySelector('.cats__lab');
 const STEP = 15 * Math.PI / 180;
 const ds = { pos: 0 };
 let lh = 70;
@@ -141,6 +141,7 @@ function setCat(n) {
   active = n;
   items.forEach((li, i) => li.classList.toggle('on', i === n));
   catLinks.forEach((a) => { a.href = curl(CATS[n][0]); });
+  catLab.textContent = `[${pad2(n + 1)}/${pad2(CATS.length)}] Catégories`;
   swap(catLays, prev, n, n > prev ? 'inset(100% 0% 0% 0%)' : 'inset(0% 0% 100% 0%)');
 }
 function drawDrum() {
@@ -156,7 +157,12 @@ function drawDrum() {
   if (n !== active) setCat(n);
 }
 const spinTo = (pos) => gsap.to(ds, { pos, duration: 0.7, ease: 'power3.out', overwrite: true, onUpdate: drawDrum });
-ScrollTrigger.create({ trigger: '.cats', start: 'top 65%', end: 'bottom 35%', onUpdate: (s) => spinTo(s.progress * (items.length - 1)) });
+// pinned while the visitor scrolls: each category gets half a screen of scroll
+ScrollTrigger.create({
+  trigger: '.cats', start: 'top top', end: () => `+=${innerHeight * 0.5 * (items.length - 1)}`,
+  pin: true, anticipatePin: 1, invalidateOnRefresh: true,
+  onUpdate: (s) => spinTo(s.progress * (items.length - 1)),
+});
 items.forEach((li, i) => li.addEventListener('pointerenter', () => spinTo(i)));
 const measureDrum = () => {
   lh = items[0].offsetHeight;
@@ -228,3 +234,6 @@ rows.forEach((r, i) => r.querySelector('.row__h').addEventListener('click', () =
   gsap.fromTo(colItems[i].querySelectorAll('.sl'), { xPercent: (k) => [-12, 9, -7][k] }, { xPercent: 0, duration: 1.3, ease: 'expo.out', stagger: 0.05 });
   ci = i;
 }));
+
+// after the pin, so triggers below it account for the pin spacing
+reveal();

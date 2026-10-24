@@ -1,6 +1,6 @@
 import {
-  gsap, data, reduce, SHOP, curl, eur, short, pad2, esc, ph, I, catOf,
-  sliced, layer, swap, marquee, carouselHTML, initCarousel, reveal, shell,
+  gsap, data, reduce, SHOP, curl, eur, price, short, pad2, esc, ph, I, catOf,
+  frame, layer, swap, split, marquee, carouselHTML, initCarousel, reveal, shell,
 } from './shared.js';
 
 const OPT = { color: 'Couleur', colour: 'Couleur', size: 'Taille', style: 'Style', type: 'Type', model: 'Modèle', material: 'Matière', 'ships from': 'Expédition' };
@@ -14,6 +14,20 @@ const n = d.images.length;
 const related = [...data.keys()].filter((i) => i !== pi && data[i].type === d.type)
   .concat([...data.keys()].filter((i) => i !== pi && data[i].type !== d.type)).slice(0, 10).map((i) => [i, 0]);
 document.title = `${short(pi)} — Hightech 94`;
+
+// the product told in a few big words instead of paragraphs: name, title features, choice, price, service
+const cap = (s) => s[0].toUpperCase() + s.slice(1);
+const PLURAL = { Couleur: 'coloris', Taille: 'tailles', Style: 'styles', Modèle: 'modèles' };
+const multi = d.options.find((o, k) => shown[k] && o.values.length > 1);
+const facts = [
+  ['Le produit', short(pi)],
+  ...sub.split(/\s*(?:,|&|\bet\b|–)\s*/).map((s) => s.trim()).filter((s) => s && s.length < 30).slice(0, 3).map((s) => ['Point fort', cap(s)]),
+  multi && ['Au choix', `${multi.values.length} ${PLURAL[OPT[multi.name.toLowerCase()]] ?? 'modèles'}`],
+  ['Prix', price(pi)],
+  ['Livraison', '10 à 15 jours'],
+  ['Retours', '30 jours pour changer d’avis'],
+].filter(Boolean);
+const SH = ['', 'shape-d', 'shape-e', 'shape-b'];
 
 const rows = [
   ['Livraison', 'Délai estimé : 10 à 15 jours. Les frais sont indiqués avant le paiement. Livraison dans 41 pays.', '/page/?p=shipping-policy', 'Politique de livraison'],
@@ -53,10 +67,16 @@ shell(`
 
 ${marquee(false)}
 
-<section class="pdp__desc">
-  <div class="pdp__dl" data-blur><p class="mono">[Description]</p><p class="h3">${esc(d.tagline || short(pi))}</p></div>
-  <div class="rte" data-blur>${d.desc.replace(/<h2>.*?<\/h2>/s, '')}</div>
-  ${n > 1 ? `<figure class="pdp__fig" data-blur>${sliced(d.images[1], 'shape-a', short(pi))}</figure>` : ''}
+<section class="story" aria-label="Présentation du produit">
+  <div class="story__stage">${facts.map((f, k) => frame(d.images[k % n], '', `scard ${SH[k % 4]}`)).join('')}</div>
+  <div class="story__words">${facts.map(([l, t], k) => `<p class="sword ${k % 2 ? 'is-l' : 'is-r'}"><span class="mono">[${pad2(k + 1)}] ${l}</span><span class="sw">${esc(t)}</span></p>`).join('')}</div>
+  <p class="mono story__count"><b>01</b>/${pad2(facts.length)}</p>
+  <p class="mono story__hint">[Faites défiler]</p>
+</section>
+
+<section class="pdp__more">
+  <ul class="pdp__rows"><li class="row"><button class="row__h" aria-expanded="false"><span class="row__t">Description complète</span><span class="circ sm">${I.arrow}</span></button>
+    <div class="row__b"><div><div class="rte">${d.desc.replace(/<h2>.*?<\/h2>/s, '')}</div></div></div></li></ul>
 </section>
 
 ${carouselHTML('vous aimerez', 'aussi', related)}`);
@@ -145,10 +165,45 @@ document.querySelectorAll('.pdp__rows .row').forEach((r) => r.querySelector('.ro
   r.querySelector('.row__h').setAttribute('aria-expanded', open);
 }));
 
+/* ---------------- story: 3D card flight + one big line per card (pinned, scrubbed) ---------------- */
+const story = document.querySelector('.story');
+const scards = [...story.querySelectorAll('.scard')];
+const swords = [...story.querySelectorAll('.sword')];
+const N = scards.length;
+if (reduce) {
+  story.classList.add('is-static');
+} else {
+  const count = story.querySelector('.story__count b');
+  gsap.set(scards, { xPercent: -50, yPercent: -50 });
+  const tl = gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: {
+      trigger: story, start: 'top top', end: () => `+=${innerHeight * 0.75 * N}`, pin: true, scrub: 0.8, invalidateOnRefresh: true,
+      onUpdate: (s) => { count.textContent = pad2(Math.min(N, Math.floor(s.progress * N) + 1)); },
+    },
+  });
+  scards.forEach((c, k) => {
+    const side = k % 2 ? 1 : -1;
+    const w = swords[k];
+    // desktop: card on one side, its words on the other; mobile: card above, words below
+    const mob = () => innerWidth < 821;
+    tl.fromTo(c, { x: () => side * innerWidth * (mob() ? 0.08 : 0.22), y: () => (mob() ? -0.14 : ((k % 3) - 1) * 0.06) * innerHeight, z: -2400, rotationY: -side * 30, rotationZ: side * 8, opacity: 0 },
+      { z: 0, rotationY: -side * 10, rotationZ: side * 2, opacity: 1, duration: 0.6, ease: 'power2.out' }, k)
+      .fromTo(w.querySelector('.mono'), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.2 }, k + 0.08)
+      .fromTo(split(w.querySelector('.sw')), { yPercent: 120, rotationX: -90, opacity: 0 },
+        { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.3, stagger: 0.01, ease: 'power3.out' }, k + 0.12);
+    if (k < N - 1) {
+      tl.to(c, { z: 800, rotationY: side * 14, opacity: 0, duration: 0.5, ease: 'power2.in' }, k + 0.65)
+        .to(w, { opacity: 0, y: -40, duration: 0.2, ease: 'power2.in' }, k + 0.78);
+    }
+  });
+  tl.to({}, { duration: 0.4 }); // hold the last line before the page moves on
+}
+
 /* ---------------- motion ---------------- */
 gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.55 })
   .fromTo(stage, { scale: 1.08, opacity: 0, filter: 'blur(20px)' }, { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 1.6, clearProps: 'filter' })
-  .fromTo('.pdp__title .ln > span', { yPercent: 110 }, { yPercent: 0, duration: 1.3 }, 0.1)
+  .fromTo(reduce ? [] : split(document.querySelector('.pdp__title .ln > span')), { yPercent: 110, rotationX: -80, opacity: 0 }, { yPercent: 0, rotationX: 0, opacity: 1, duration: 1.2, stagger: 0.025 }, 0.1)
   .fromTo('.pdp [data-in], .pdp__bar, .pdp__thumbs', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1, stagger: 0.05 }, 0.3);
 reveal();
 initCarousel(document.querySelector('.car'));

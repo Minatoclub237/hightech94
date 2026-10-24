@@ -128,7 +128,7 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1
 figcaption { margin-top: 12px; }
 
 /* ---------- categories drum ---------- */
-.cats { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gap); align-items: center; padding: 6vw var(--pad) 7vw; }
+.cats { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gap); align-items: center; align-content: center; min-height: 100svh; padding: 4vw var(--pad); background: var(--bg); }
 .cats__l { grid-column: 1 / 4; }
 .cats__l p { max-width: 260px; margin-bottom: 28px; line-height: 1.4; }
 .cats__img { grid-column: 5 / 9; position: relative; display: block; aspect-ratio: .86; background: var(--card); }
@@ -243,6 +243,36 @@ figcaption { margin-top: 12px; }
 .qty span { min-width: 26px; text-align: center; font-variant-numeric: tabular-nums; }
 .qty.sm { height: 42px; }
 .qty.sm button { width: 38px; }
+
+/* ---------- text motion ---------- */
+[data-split], .sw { perspective: 700px; }
+.w { display: inline-block; white-space: nowrap; }
+.ch { display: inline-block; transform-origin: 50% 100%; }
+.roll { position: relative; display: inline-block; overflow: hidden; vertical-align: top; }
+.roll > span, .roll::after { display: block; transition: transform .55s cubic-bezier(.7, 0, .2, 1); }
+.roll::after { content: attr(data-t); position: absolute; left: 0; top: 100%; }
+:is(a, button):hover > .roll > span, :is(a, button):hover > .roll::after { transform: translateY(-100%); }
+
+/* ---------- product story: 3D card flight ---------- */
+.story { position: relative; height: 100svh; overflow: hidden; background: var(--bg); isolation: isolate; }
+.story__stage { position: absolute; inset: 0; perspective: 1100px; }
+.scard { position: absolute; left: 50%; top: 50%; width: min(28vw, 44svh); aspect-ratio: .82; opacity: 0; will-change: transform, opacity; }
+.story__words { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; color: #fff; mix-blend-mode: difference; pointer-events: none; }
+.sword { grid-area: 1 / 1; max-width: 86vw; text-align: center; }
+.sword.is-l { justify-self: start; max-width: 50vw; padding-left: 6vw; text-align: left; }
+.sword.is-r { justify-self: end; max-width: 50vw; padding-right: 6vw; text-align: right; }
+.sword .mono { display: block; margin-bottom: 18px; }
+.sw { display: block; font-family: var(--display); font-weight: 500; font-size: clamp(44px, 5.8vw, 112px); line-height: .95; letter-spacing: -.05em; }
+.story__count, .story__hint { position: absolute; z-index: 3; bottom: 28px; }
+.story__count { left: var(--pad); }
+.story__count b { font-weight: 400; }
+.story__hint { right: var(--pad); color: var(--mute); }
+.story.is-static { height: auto; padding: 6vw var(--pad); }
+.story.is-static .story__stage, .story.is-static .story__count, .story.is-static .story__hint { display: none; }
+.story.is-static .story__words { position: static; gap: 40px; color: var(--ink); mix-blend-mode: normal; }
+.story.is-static .sword { grid-area: auto; }
+.pdp__more { max-width: 900px; margin: 0 auto; padding: 5vw var(--pad); }
+.pdp__more .rte { padding-bottom: 28px; }
 
 /* ---------- page transition curtain ---------- */
 .curtain { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: var(--black); color: #fff; pointer-events: none; }
@@ -362,10 +392,12 @@ figcaption { margin-top: 12px; }
   .moments__p { grid-column: 1 / 2; }
   .moments__price { grid-column: 2 / 3; }
   .moments__pct { justify-self: end; }
-  .cats { grid-template-columns: 1fr; row-gap: 32px; padding: 72px var(--pad); }
+  .cats { grid-template-columns: 1fr; row-gap: 18px; padding: 24px var(--pad); }
   .cats > * { grid-column: 1 / -1; }
   .cats__r { order: -1; }
-  .cats__img { width: min(100%, 420px); justify-self: center; }
+  .cats__l { order: 1; }
+  .cats__l p { display: none; }
+  .cats__img { width: min(100%, 36svh); justify-self: center; }
   .spot { padding: 72px var(--pad) 48px; }
   .spot__top { grid-template-columns: auto 1fr auto; }
   .spot__top .mono { grid-column: 2; padding-left: 16px; }
@@ -400,6 +432,10 @@ figcaption { margin-top: 12px; }
   .pdp__dl, .pdp__desc .rte, .pdp__fig { grid-column: 1; }
   .pdp__dl { position: static; }
   .rte { font-size: 17px; }
+  .scard { width: 56vw; }
+  .story__words { align-items: end; padding-bottom: 13svh; }
+  .sword.is-l, .sword.is-r { justify-self: center; max-width: 90vw; padding: 0; text-align: center; }
+  .sw { font-size: 12vw; }
   .plp { padding-top: 100px; }
   .plp__head { grid-template-columns: 1fr; }
   .plp__title, .plp__p { grid-column: 1; }

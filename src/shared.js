@@ -85,7 +85,7 @@ export const marquee = (rev) => `<div class="marq" ${rev ? 'data-rev' : ''} aria
 export const carouselHTML = (a, b, list, id = '') => `
 <section class="car" ${id ? `id="${id}"` : ''}>
   <div class="car__head" data-blur>
-    <h2 class="h3">${a} -<br>${b}</h2>
+    <h2 class="h3" data-split>${a} -<br>${b}</h2>
     <p class="mono car__yr">2026</p>
     <a class="mono car__all" href="${curl()}">[Tout voir]</a>
     <div class="car__nav"><button class="circ sm" data-cprev aria-label="Précédent">${I.back}</button><button class="circ sm" data-cnext aria-label="Suivant">${I.arrow}</button></div>
@@ -151,10 +151,43 @@ export function initCarousel(root) {
   draw();
 }
 
+/* ---------------- split text into words/chars (keeps <br> and nested spans) ---------------- */
+export function split(el) {
+  el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+  const walk = (node) => [...node.childNodes].forEach((n) => {
+    if (n.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach((part) => {
+        if (!part) return;
+        if (!part.trim()) { frag.append(' '); return; }
+        const w = document.createElement('span');
+        w.className = 'w';
+        w.setAttribute('aria-hidden', 'true');
+        for (const c of part) {
+          const s = document.createElement('span');
+          s.className = 'ch';
+          s.textContent = c;
+          w.append(s);
+        }
+        frag.append(w);
+      });
+      n.replaceWith(frag);
+    } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
+  });
+  walk(el);
+  return el.querySelectorAll('.ch');
+}
+
 /* ---------------- scroll reveals (scrubbed, reversible) ---------------- */
 export function reveal(root = document) {
   if (reduce) return [];
   const made = [];
+  root.querySelectorAll('[data-split]').forEach((el) => {
+    made.push(gsap.fromTo(split(el), { yPercent: 110, rotationX: -90, opacity: 0 }, {
+      yPercent: 0, rotationX: 0, opacity: 1, ease: 'power3.out', stagger: 0.015,
+      scrollTrigger: { trigger: el, start: 'top 92%', end: 'clamp(top 55%)', scrub: 0.6 },
+    }));
+  });
   root.querySelectorAll('[data-blur]').forEach((el) => {
     made.push(gsap.fromTo(el, { filter: 'blur(16px)', opacity: 0.15, y: 60 }, {
       filter: 'blur(0px)', opacity: 1, y: 0, ease: 'none',
@@ -225,7 +258,7 @@ const footer = `
   <div class="foot__top">
     <div class="foot__l" data-blur>
       <p class="mono lab">Contact</p>
-      <h2 class="h2 foot__h">La tech connectée<br><span class="und"></span>livrée chez vous</h2>
+      <h2 class="h2 foot__h" data-split>La tech connectée<br><span class="und"></span>livrée chez vous</h2>
       <form class="foot__form"><input name="m" placeholder="Écrivez-nous un message" aria-label="Votre message" autocomplete="off"><button class="circ inv" aria-label="Envoyer">${I.arrow}</button></form>
       <div class="foot__pay"><p class="mono lab">Paiement sécurisé</p><p>Visa · Mastercard · Amex · Maestro — 3-D Secure</p></div>
     </div>
@@ -251,6 +284,16 @@ const footer = `
 
 export function shell(main) {
   document.querySelector('#app').innerHTML = `${header}<main>${main}</main>${footer}`;
+  // hover text roll: the label slides up and a copy follows from below
+  document.querySelectorAll('.pill, .nav__links a, .foot__menus a').forEach((el) => {
+    const n = [...el.childNodes].find((c) => c.nodeType === 3 && c.textContent.trim());
+    if (!n) return;
+    const s = document.createElement('span');
+    s.className = 'roll';
+    s.dataset.t = n.textContent.trim();
+    s.innerHTML = `<span>${esc(s.dataset.t)}</span>`;
+    n.replaceWith(s);
+  });
   const lenis = reduce ? null : new Lenis({ lerp: 0.1 });
   if (lenis) {
     lenis.on('scroll', ScrollTrigger.update);
