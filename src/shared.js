@@ -46,6 +46,10 @@ export const I = {
   car: svg('<path d="M3 16v-4l2.5-5h13l2.5 5v4z"/><circle cx="7.5" cy="16.5" r="1.8"/><circle cx="16.5" cy="16.5" r="1.8"/>'),
   shield: svg('<path d="M12 2.5 4.5 5.5v6c0 4.5 3.2 8 7.5 10 4.3-2 7.5-5.5 7.5-10v-6z"/>'),
   home: svg('<path d="M3.5 11 12 4l8.5 7M6 9.5V20h12V9.5"/>'),
+  truck: svg('<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/>'),
+  ret: svg('<path d="M4 9h11a5 5 0 0 1 0 10H8"/><path d="m8 5-4 4 4 4"/>'),
+  lock: svg('<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>'),
+  mail: svg('<rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/>'),
 };
 
 // [product type, label, cover [product, image], description, optional crop on the cover]
@@ -229,7 +233,7 @@ const header = `
     <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span></button>
     <nav class="nav__links">${NAV.map(([h, t]) => `<a href="${h}">${t}</a>`).join('')}</nav>
   </div>
-  <a class="logo" href="/">HIGHTECH<sup>94</sup></a>
+  <a class="logo" href="/" aria-label="Hightech 94 — retour au début"><picture><source media="(max-width: 820px)" srcset="/brand/mark-light.webp"><img src="/brand/lockup-light.webp" alt="Hightech 94" width="190" height="52"></picture></a>
   <div class="nav__r">
     <button data-search aria-label="Rechercher">${I.search}</button>
     <button data-cart aria-label="Panier">${I.bag}<span class="badge" hidden></span></button>
@@ -260,39 +264,42 @@ const header = `
   </div>
 </aside>`;
 
+const li = (h, t) => `<li><a href="${h}">${t}</a></li>`;
 const footer = `
 <footer class="foot" id="contact">
-  <div class="foot__top">
-    <div class="foot__l" data-blur>
-      <p class="mono lab">Contact</p>
-      <h2 class="h2 foot__h" data-split>La tech connectée<br><span class="und"></span>livrée chez vous</h2>
+  <ul class="foot__usp" data-blur>
+    <li>${I.truck}<div><b>Livraison 10 à 15 jours</b><span>Dans 41 pays</span></div></li>
+    <li>${I.ret}<div><b>Retours 30 jours</b><span>Après la livraison</span></div></li>
+    <li>${I.lock}<div><b>Paiement sécurisé</b><span>Caisse Shopify, 3-D Secure</span></div></li>
+    <li>${I.mail}<div><b>Une question ?</b><span>On vous répond par e-mail</span></div></li>
+  </ul>
+  <div class="foot__main">
+    <div class="foot__brand" data-blur>
+      <a class="foot__logo" href="/" aria-label="Hightech 94 — retour au début"><img src="/brand/logo-dark.webp" alt="Hightech 94" width="720" height="619" loading="lazy"></a>
+      <p class="foot__lead">Objets connectés et high-tech, choisis un par un et livrés depuis Fontenay-sous-Bois (94).</p>
       <form class="foot__form"><input name="m" placeholder="Écrivez-nous un message" aria-label="Votre message" autocomplete="off"><button class="circ inv" aria-label="Envoyer">${I.arrow}</button></form>
-      <div class="foot__pay"><p class="mono lab">Paiement sécurisé</p>${payIcons()}</div>
+      <a class="foot__mail" href="mailto:${EMAIL}">${EMAIL}</a>
     </div>
-    <div class="foot__info" data-blur>
-      <div><p class="mono lab">Localisation</p><p>Fontenay-sous-Bois (94)<br>France</p></div>
-      <div><p class="mono lab">Livraison</p><p>10 à 15 jours, dans 41 pays<br>dont la France, la Belgique et la Suisse</p></div>
-      <div><p class="mono lab">E-mail</p><p><a href="mailto:${EMAIL}">${EMAIL}</a></p></div>
-      <div><p class="mono lab">Retours</p><p>30 jours après la livraison</p></div>
-    </div>
-    <div class="foot__menus" data-blur>
-      <div><p class="mono lab">Menu</p><ul>${NAV.map(([h, t]) => `<li><a href="${h}">${t}</a></li>`).join('')}</ul></div>
-      <div><p class="mono lab">Boutique</p><ul>${[0, 1, 3, 6].map((c) => `<li><a href="${curl(CATS[c][0])}">${CATS[c][1]}</a></li>`).join('')}</ul></div>
-      <div><p class="mono lab">Aide</p><ul><li><a href="/page/?p=shipping-policy">Livraison</a></li><li><a href="/page/?p=refund-policy">Retours</a></li><li><a href="mailto:${EMAIL}">Nous écrire</a></li></ul></div>
-    </div>
+    <nav class="foot__cols" data-blur aria-label="Liens du site">
+      <div><p class="mono lab">Boutique</p><ul>${li(curl(), 'Tout voir')}${[0, 1, 3, 4, 6, 7].map((c) => li(curl(CATS[c][0]), CATS[c][1])).join('')}</ul></div>
+      <div><p class="mono lab">Univers</p><ul>${li('/#univers', 'Tout connecté')}${li('/#categories', 'Catégories')}${li('/#coups-de-coeur', 'Coups de cœur')}${li('/#selection', 'La sélection')}</ul></div>
+      <div><p class="mono lab">Aide</p><ul>${li('/page/?p=shipping-policy', 'Livraison')}${li('/page/?p=refund-policy', 'Retours')}${li('/page/?p=terms-of-service', 'Conditions générales')}${li('/page/?p=privacy-policy', 'Confidentialité')}${li(`mailto:${EMAIL}`, 'Nous écrire')}</ul></div>
+      <div><p class="mono lab">Nous trouver</p><p>Fontenay-sous-Bois (94)<br>France</p><p class="foot__open"><i></i>Ouverte 24 h/24, 7 j/7</p></div>
+    </nav>
   </div>
-  <div class="foot__bot mono">
-    <a href="/page/?p=terms-of-service">Conditions générales</a>
-    <a href="/page/?p=privacy-policy">Confidentialité</a>
-    <p>© 2026 High Tech — Tous droits réservés</p>
+  <p class="foot__giant" data-split aria-hidden="true">HIGHTECH94</p>
+  <div class="foot__bot">
+    <p class="mono">© 2026 High Tech — Tous droits réservés</p>
+    ${payIcons()}
+    <button class="foot__up mono" data-top>Retour en haut ${I.arrow}</button>
   </div>
 </footer>
-<div class="curtain"><span class="logo">HIGHTECH<sup>94</sup></span></div>`;
+<div class="curtain"><img src="/brand/logo-dark.webp" alt="" width="720" height="619"></div>`;
 
 export function shell(main) {
   document.querySelector('#app').innerHTML = `${header}<main>${main}</main>${footer}`;
   // hover text roll: the label slides up and a copy follows from below
-  document.querySelectorAll('.pill, .nav__links a, .foot__menus a').forEach((el) => {
+  document.querySelectorAll('.pill, .nav__links a, .foot__cols a').forEach((el) => {
     const n = [...el.childNodes].find((c) => c.nodeType === 3 && c.textContent.trim());
     if (!n) return;
     const s = document.createElement('span');
@@ -409,6 +416,8 @@ export function shell(main) {
   gsap.fromTo(curtain, { clipPath: 'inset(0% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.1, ease: 'expo.inOut', delay: 0.1 });
   addEventListener('pageshow', (e) => e.persisted && gsap.set(curtain, { clipPath: 'inset(0% 0% 100% 0%)' }));
   const scrollTo = (hash) => (lenis ? lenis.scrollTo(hash, { duration: 1.6 }) : document.querySelector(hash)?.scrollIntoView());
+  const toTop = () => (lenis ? lenis.scrollTo(0, { duration: 2 }) : window.scrollTo(0, 0));
+  document.querySelector('[data-top]').addEventListener('click', toTop);
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
     if (!a || e.defaultPrevented || a.target || e.metaKey || e.ctrlKey || e.shiftKey) return;
@@ -416,7 +425,8 @@ export function shell(main) {
     if (u.origin !== location.origin || a.getAttribute('href') === '#') return;
     e.preventDefault();
     Object.keys(P).forEach((k) => toggle(k, false));
-    if (u.pathname === location.pathname && u.search === location.search && u.hash) { scrollTo(u.hash); return; }
+    // same page: anchors glide to their section, the logo glides back to the hero
+    if (u.pathname === location.pathname && u.search === location.search) { if (u.hash) scrollTo(u.hash); else toTop(); return; }
     gsap.fromTo(curtain, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'expo.inOut', onComplete: () => { location.href = u.href; } });
   });
 

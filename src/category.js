@@ -88,6 +88,7 @@ document.querySelector('.sort').addEventListener('click', (e) => {
 });
 
 render(true);
+reveal(document.querySelector('.foot'));
 gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.55 })
   .fromTo('.plp__t', { yPercent: 110 }, { yPercent: 0, duration: 1.4 })
   .fromTo('.plp__lab, .plp__p, .plp__bar', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1, stagger: 0.06 }, 0.2)
