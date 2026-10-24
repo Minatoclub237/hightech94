@@ -15,7 +15,13 @@ export const BIZ = {
   geo: [48.856722, 2.4831704],
   maps: 'https://www.google.com/maps?cid=5817617384683969146',
   rating: '5,0',
+  owner: 'Sofien Gueblaoui', // « Responsable » on the store's own mentions légales page
 };
+
+// Promotion shown on the old Shopify theme's announcement bar
+export const SHIPPING = { fr: 7.99, freeFrom: 60 };
+export const PROMO = 'France : livraison standard 7,99 € · option gratuite dès 60 € pour les produits éligibles';
+export const PROMO_SHORT = 'France : option de livraison gratuite dès 60 €';
 
 // Registry details the owner must fill in before going live (empty = shown as "à compléter")
 export const LEGAL = {
@@ -25,7 +31,7 @@ export const LEGAL = {
   rcs: '', // ex. « RCS Créteil 123 456 789 » (sociétés uniquement)
   capital: '', // sociétés uniquement
   vat: '', // n° de TVA intracommunautaire, si assujetti
-  director: '', // directeur ou directrice de la publication
+  director: 'Sofien Gueblaoui', // named « Responsable » on the store's own mentions légales
   siteHost: '', // hébergeur du site une fois mis en ligne (ex. Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA)
   mediator: '', // médiateur de la consommation (obligatoire pour la vente aux particuliers)
 };
@@ -43,13 +49,22 @@ export const CATS = [
   ['Éclairage connecté', 'Lumière', [27, 0], 'Ampoules RGB pilotables à la voix ou depuis l’application.', 'lumiere'],
 ];
 
-export const POLICY_KEYS = ['shipping-policy', 'refund-policy', 'terms-of-service', 'privacy-policy'];
+// Shopify policy pages kept on the site (its terms/privacy templates still say « EXEMPLE »:
+// the owner's own « Conditions de vente » and « Confidentialité » pages replace them)
+export const POLICY_KEYS = ['shipping-policy', 'refund-policy'];
+// the owner's own pages, imported from the Shopify theme
+export const CONTENT_KEYS = ['a-propos', 'faq', 'livraison-retours', 'confiance', 'conditions-de-vente', 'confidentialite-donnees'];
+
+// FAQ written as <h3>question</h3><p>answer</p>…
+export const faqPairs = (html) => [...html.matchAll(/<h3>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h3>|$)/g)]
+  .map(([, q, a]) => ({ q: q.replace(/<[^>]+>/g, '').trim(), a: a.trim() }));
 
 // Mentions légales (LCEN art. 6 III, Code de la consommation L.111-1 et L.612-1)
 const todo = (v, hint = '') => v || `<mark class="todo">à compléter${hint ? ` — ${hint}` : ''}</mark>`;
 export const legalHTML = () => `
 <h2>Éditeur du site</h2>
 <p>Nom commercial : <strong>${BIZ.name}</strong><br>
+Responsable : ${BIZ.owner}<br>
 Raison sociale : ${todo(LEGAL.company, 'nom de la société, ou nom et prénom de l’entrepreneur')}<br>
 Forme juridique : ${todo(LEGAL.form, 'EI, micro-entreprise, SASU, SARL…')}<br>
 Adresse : ${BIZ.street}, ${BIZ.zip} ${BIZ.city}, France<br>
@@ -68,7 +83,7 @@ Site vitrine : ${todo(LEGAL.siteHost, 'hébergeur choisi lors de la mise en lign
 <h2>Propriété intellectuelle</h2>
 <p>Les textes, logos, visuels et vidéos de ce site appartiennent à ${BIZ.name} ou à leurs auteurs respectifs. Toute reproduction sans autorisation écrite est interdite.</p>
 <h2>Données personnelles et cookies</h2>
-<p>Les données d’une commande sont traitées par Shopify pour le compte de ${BIZ.name} ; consultez notre <a href="${pagePath('privacy-policy')}">politique de confidentialité</a> pour exercer vos droits. Ce site ne dépose aucun cookie publicitaire : votre panier est simplement enregistré dans votre navigateur.</p>`;
+<p>Les données d’une commande sont traitées par Shopify pour le compte de ${BIZ.name} ; consultez notre <a href="${pagePath('confidentialite-donnees')}">page confidentialité</a> pour exercer vos droits. Ce site ne dépose aucun cookie publicitaire : votre panier est simplement enregistré dans votre navigateur.</p>`;
 
 export const eur = (n) => n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: n % 1 ? 2 : 0 });
 export const shortTitle = (title) => title.split(/ [–-] |, /)[0];

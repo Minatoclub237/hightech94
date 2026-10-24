@@ -14,9 +14,9 @@ import payments from './payments.json'; // the store's own payment icons (Shopif
 gsap.registerPlugin(ScrollTrigger);
 export { gsap, ScrollTrigger, data };
 
-import { SHOP, BIZ, LEGAL, CATS, POLICY_KEYS, eur, shortTitle, productPath, catPath, pagePath } from './catalog.js';
+import { SHOP, BIZ, LEGAL, CATS, POLICY_KEYS, CONTENT_KEYS, SHIPPING, PROMO, PROMO_SHORT, eur, shortTitle, productPath, catPath, pagePath } from './catalog.js';
 
-export { SHOP, BIZ, LEGAL, CATS, POLICY_KEYS, eur, pagePath };
+export { SHOP, BIZ, LEGAL, CATS, POLICY_KEYS, CONTENT_KEYS, eur, pagePath };
 export const EMAIL = BIZ.email;
 export const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 export const img = (p, i = 0) => data[p].images[i] ?? data[p].images[0];
@@ -239,6 +239,7 @@ addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => resiz
 /* ---------------- page shell ---------------- */
 const NAV = [['/#univers', 'Univers'], [curl(), 'Boutique'], ['/#coups-de-coeur', 'Coups de cœur'], ['/#contact', 'Contact']];
 const header = `
+<div class="bar" role="note">${I.truck}<span class="bar__full">${PROMO}</span><span class="bar__short">${PROMO_SHORT}</span></div>
 <header class="nav">
   <div class="nav__l">
     <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span></button>
@@ -267,6 +268,7 @@ const header = `
     <div class="cart__head"><p class="h3">Panier<sup class="cart__n">0</sup></p><button class="menu__x mono" data-close>Fermer</button></div>
     <ul class="cart__list" data-lenis-prevent></ul>
     <div class="cart__foot">
+      <div class="ship"><p class="ship__t"></p><div class="ship__bar"><span></span></div></div>
       <div class="cart__sum"><span class="mono">Sous-total</span><b>0 €</b></div>
       <p class="cart__note">Livraison estimée : 10 à 15 jours. Frais calculés à l’étape suivante, paiement sécurisé par Shopify.</p>
       ${payIcons()}
@@ -281,7 +283,7 @@ export const gstar = (cls = '') => `<a class="gstar ${cls}" href="${BIZ.maps}" t
 const footer = `
 <footer class="foot" id="contact">
   <ul class="foot__usp" data-blur>
-    <li>${I.truck}<div><b>Livraison 10 à 15 jours</b><span>Dans 41 pays</span></div></li>
+    <li>${I.truck}<div><b>Livraison 10 à 15 jours</b><span>France ${eur(SHIPPING.fr)} · gratuite dès ${SHIPPING.freeFrom} €*</span></div></li>
     <li>${I.ret}<div><b>Retours 30 jours</b><span>Après la livraison</span></div></li>
     <li>${I.lock}<div><b>Paiement sécurisé</b><span>Caisse Shopify, 3-D Secure</span></div></li>
     <li>${I.mail}<div><b>Une question ?</b><span><a href="tel:${BIZ.tel}">${BIZ.phone}</a> ou par e-mail</span></div></li>
@@ -296,8 +298,8 @@ const footer = `
     </div>
     <nav class="foot__cols" data-blur aria-label="Liens du site">
       <div><p class="mono lab">Boutique</p><ul>${li(curl(), 'Tout voir')}${[0, 1, 3, 4, 6, 7].map((c) => li(curl(CATS[c][0]), CATS[c][1])).join('')}</ul></div>
-      <div><p class="mono lab">Univers</p><ul>${li('/#univers', 'Tout connecté')}${li('/#categories', 'Catégories')}${li('/#coups-de-coeur', 'Coups de cœur')}${li('/#selection', 'La sélection')}</ul></div>
-      <div><p class="mono lab">Aide</p><ul>${li(pagePath('shipping-policy'), 'Livraison')}${li(pagePath('refund-policy'), 'Retours')}${li(pagePath('terms-of-service'), 'Conditions générales')}${li(pagePath('privacy-policy'), 'Confidentialité')}${li(pagePath('mentions-legales'), 'Mentions légales')}</ul></div>
+      <div><p class="mono lab">La boutique</p><ul>${li(pagePath('a-propos'), 'À propos')}${li(pagePath('confiance'), 'Confiance & sécurité')}${li('/#coups-de-coeur', 'Coups de cœur')}${li('/#selection', 'La sélection')}</ul></div>
+      <div><p class="mono lab">Aide</p><ul>${li(pagePath('faq'), 'FAQ')}${li(pagePath('livraison-retours'), 'Livraison & retours')}${li(pagePath('conditions-de-vente'), 'Conditions de vente')}${li(pagePath('confidentialite-donnees'), 'Confidentialité')}${li(pagePath('mentions-legales'), 'Mentions légales')}</ul></div>
       <div><p class="mono lab">Nous trouver</p><p>${BIZ.street}<br>${BIZ.zip} ${BIZ.city}</p><ul class="foot__find"><li><a href="${BIZ.maps}" target="_blank" rel="noopener">Itinéraire ↗</a></li><li><a href="tel:${BIZ.tel}">${BIZ.phone}</a></li></ul><p class="foot__open"><i></i>Boutique en ligne 24 h/24</p></div>
     </nav>
   </div>
@@ -312,6 +314,8 @@ const footer = `
 
 export function shell(main) {
   document.querySelector('#app').innerHTML = `${header}<main>${main}</main>${footer}`;
+  // the static loading screen of the prerendered HTML hands over to the identical JS curtain
+  document.getElementById('boot')?.remove();
   // hover text roll: the label slides up and a copy follows from below
   document.querySelectorAll('.pill, .nav__links a, .foot__cols a').forEach((el) => {
     const n = [...el.childNodes].find((c) => c.nodeType === 3 && c.textContent.trim());
@@ -405,7 +409,15 @@ export function shell(main) {
         <div class="ci__row"><div class="qty sm"><button data-q="-1" data-id="${i.id}" aria-label="Moins">−</button><span>${i.q}</span><button data-q="1" data-id="${i.id}" aria-label="Plus">+</button></div><b>${eur(v.price * i.q)}</b></div>
         <button class="ci__x mono" data-rm="${i.id}">Retirer</button></div></li>`;
     }).join('') || `<li class="cart__empty"><p>Votre panier est vide.</p><a class="pill" href="${curl()}">Voir la boutique ${I.arrow}</a></li>`;
-    cartEl.querySelector('.cart__sum b').textContent = eur(cart.reduce((s, i) => s + find(i.id).v.price * i.q, 0));
+    const sub = cart.reduce((s, i) => s + find(i.id).v.price * i.q, 0);
+    cartEl.querySelector('.cart__sum b').textContent = eur(sub);
+    // the store's promotion: free delivery option in France from 60 € (eligible products)
+    const ship = cartEl.querySelector('.ship');
+    ship.hidden = !n;
+    ship.querySelector('.ship__t').textContent = sub >= SHIPPING.freeFrom
+      ? 'L’option de livraison gratuite est disponible en France pour les produits éligibles.'
+      : `Plus que ${eur(SHIPPING.freeFrom - sub)} pour l’option de livraison gratuite en France (produits éligibles).`;
+    ship.querySelector('span').style.transform = `scaleX(${Math.min(1, sub / SHIPPING.freeFrom)})`;
     const go = cartEl.querySelector('.cart__go');
     go.href = n ? `${SHOP}/cart/${cart.map((i) => `${i.id}:${i.q}`).join(',')}` : '#';
     go.classList.toggle('off', !n);

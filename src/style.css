@@ -275,6 +275,18 @@ figcaption { margin-top: 12px; }
 .foot__usp a:hover, .foot__bot a:hover { color: var(--accent); }
 .todo { padding: 0 6px; border-radius: 4px; background: #fff1e8; color: #b3410e; }
 
+/* ---------- promotion bar + free-delivery progress ---------- */
+.bar { position: relative; z-index: 6; display: flex; justify-content: center; align-items: center; gap: 10px; height: 40px; padding: 0 var(--pad); background: var(--black); color: #f2f2f2; font-size: 14px; letter-spacing: .01em; }
+.bar svg { font-size: 18px; color: var(--accent); }
+.bar__short { display: none; }
+.nav { top: 40px; }
+.ship[hidden] { display: none; }
+.ship__t { font-size: 15px; line-height: 1.4; }
+.ship__bar { height: 4px; margin-top: 10px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.ship__bar span { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); transition: transform .6s cubic-bezier(.7, 0, .2, 1); }
+.faq .row__t { font-size: clamp(19px, 1.6vw, 26px); }
+.faq .rte { padding-bottom: 22px; }
+
 /* ---------- shared controls ---------- */
 .pill--fill { background: var(--ink); color: #fff; }
 .pill--fill:hover { background: var(--accent); border-color: var(--accent); }
@@ -422,10 +434,12 @@ figcaption { margin-top: 12px; }
 .legal > .mono, .legal > h1, .legal > .chips { grid-column: 1 / -1; }
 .legal > h1 { margin: 14px 0 26px; }
 .legal > .chips { margin-bottom: 5vw; }
-.legal .rte { grid-column: 3 / 10; }
+.legal__body { grid-column: 3 / 10; }
 
 /* ---------- mobile ---------- */
 @media (max-width: 820px) {
+  .bar__full { display: none; }
+  .bar__short { display: inline; }
   :root { --pad: 16px; --gap: 12px; }
   /* phone: video in the lower two thirds (the watch stays in frame), text in the grey band above */
   .hero__media { top: 34svh; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%); mask-image: linear-gradient(to bottom, transparent, #000 16%); }
@@ -509,5 +523,5 @@ figcaption { margin-top: 12px; }
   .pcard:nth-child(4n+2), .pcard:nth-child(4n+4) { margin-top: 0; }
   .pcard:nth-child(even) { margin-top: 40px; }
   .legal { grid-template-columns: 1fr; padding-top: 100px; }
-  .legal .rte { grid-column: 1; }
+  .legal__body { grid-column: 1; }
 }

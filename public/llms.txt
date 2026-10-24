@@ -50,8 +50,12 @@
 - [Ampoule Caméra de Surveillance WiFi](/produit/bulb-camera-wireless-wifi-monitoring/) — dès 12,23 € (Sécurité)
 
 ## Informations
+- [À propos de High Tech](/page/a-propos/)
+- [FAQ - Questions Fréquentes](/page/faq/)
+- [Livraison &amp; Retours](/page/livraison-retours/)
+- [Confiance &amp; Sécurité](/page/confiance/)
+- [Informations et conditions de vente](/page/conditions-de-vente/)
+- [Confidentialité et données personnelles](/page/confidentialite-donnees/)
 - [Mentions légales](/page/mentions-legales/)
 - [Politique d’expédition](/page/shipping-policy/)
 - [Politique de remboursement](/page/refund-policy/)
-- [Conditions d’utilisation](/page/terms-of-service/)
-- [Politique de confidentialité](/page/privacy-policy/)

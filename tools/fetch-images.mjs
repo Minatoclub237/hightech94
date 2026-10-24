@@ -6,8 +6,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
+import { SHOP, CONTENT_KEYS } from '../src/catalog.js';
 
-const SHOP = 'https://hightech94-store.myshopify.com';
 const [, , feed, rawArg] = process.argv;
 const rawDir = rawArg ?? path.join(os.tmpdir(), 'ht94-raw');
 const root = path.resolve(import.meta.dirname, '..');
@@ -19,7 +19,8 @@ const curation = JSON.parse(await fs.readFile(path.join(root, 'tools/curation.js
 await fs.mkdir(rawDir, { recursive: true });
 await fs.mkdir(outImg, { recursive: true });
 
-const strip = (html) => html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+const strip = (html) => html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+  .replace(/&amp;/g, '&').replace(/&#39;|&rsquo;/g, '’').replace(/&quot;/g, '"').replace(/&nbsp;/g, ' ');
 // keep text markup only: no scripts, styles, attributes or other tags
 const TAGS = 'h2|h3|p|ul|ol|li|strong|b|em|br';
 const clean = (html) => html
@@ -92,4 +93,16 @@ for (const h of ['shipping-policy', 'refund-policy', 'privacy-policy', 'terms-of
   };
 }
 await fs.writeFile(path.join(root, 'src/policies.json'), JSON.stringify(policies));
+
+// the owner's own content pages (Shopify → Boutique en ligne → Pages)
+const pages = {};
+for (const h of CONTENT_KEYS) {
+  const html = await (await fetch(`${SHOP}/pages/${h}`)).text();
+  const main = html.match(/<main[\s\S]*?<\/main>/i)?.[0] ?? html;
+  pages[h] = {
+    title: strip(main.match(/<h1[^>]*>(.*?)<\/h1>/is)?.[1] ?? h),
+    html: clean(main.match(/<div[^>]*class="[^"]*\brte\b[^"]*"[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? ''),
+  };
+}
+await fs.writeFile(path.join(root, 'src/pages.json'), JSON.stringify(pages));
 console.log(`${data.length} products, ${data.reduce((s, d) => s + d.images.length, 0)} images`);

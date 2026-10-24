@@ -4,7 +4,7 @@
 // for crawlers that do not run JavaScript; also public/robots.txt, sitemap.xml and llms.txt.
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { BIZ, CATS, POLICY_KEYS, eur, shortTitle, productPath, catPath, pagePath, legalHTML } from '../src/catalog.js';
+import { BIZ, CATS, POLICY_KEYS, CONTENT_KEYS, SHIPPING, eur, shortTitle, productPath, catPath, pagePath, legalHTML, faqPairs } from '../src/catalog.js';
 
 const root = path.resolve(import.meta.dirname, '..');
 const data = JSON.parse(await fs.readFile(path.join(root, 'src/data.json'), 'utf8'));
@@ -19,6 +19,13 @@ const priceTxt = (d) => (d.min === d.max ? eur(d.min) : `dès ${eur(d.min)}`);
 const label = (t) => CATS.find((c) => c[0] === t)[1];
 const STORE_ID = `${abs('/')}#store`;
 const PAY = 'Visa, Mastercard, American Express, Cartes Bancaires, PayPal, Apple Pay, Shop Pay, Klarna';
+const content = JSON.parse(await fs.readFile(path.join(root, 'src/pages.json'), 'utf8'));
+// standard delivery in France (the free option from 60 € only applies to eligible products)
+const SHIP_FR = {
+  '@type': 'OfferShippingDetails',
+  shippingRate: { '@type': 'MonetaryAmount', value: SHIPPING.fr.toFixed(2), currency: 'EUR' },
+  shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'FR' },
+};
 const RETURNS = {
   '@type': 'MerchantReturnPolicy', applicableCountry: 'FR', merchantReturnDays: 30,
   returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', returnMethod: 'https://schema.org/ReturnByMail',
@@ -47,10 +54,11 @@ const html = ({ title, desc, url, image, type = 'website', script, schema = [], 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <style>.seo{max-width:760px;margin:0 auto;padding:120px 24px;font:17px/1.6 system-ui,sans-serif;color:#444}.seo a{color:inherit}</style>
+    <style>html{background:#0b0b0b}#boot{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#0b0b0b}#boot img{display:block;width:min(320px,56vw);height:auto;mix-blend-mode:lighten}.seo{max-width:760px;margin:0 auto;padding:120px 24px;font:17px/1.6 system-ui,sans-serif;color:#444;background:#fff}.seo a{color:inherit}</style>
     ${schema.map(ld).join('\n    ')}
   </head>
   <body>
+    <div id="boot"><img src="/brand/logo-dark.webp" alt="" width="720" height="619" /></div>
     <div id="app"><main class="seo">${body}</main></div>
     <script type="module" src="/src/${script}.js"></script>
   </body>
@@ -103,7 +111,7 @@ for (const d of data) {
         '@type': 'Offer', url: abs(url), sku: v.sku || String(v.id), priceCurrency: 'EUR', price: v.price.toFixed(2),
         ...(v.title !== 'Default Title' && { name: v.title }),
         availability: v.available ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-        itemCondition: 'https://schema.org/NewCondition', hasMerchantReturnPolicy: RETURNS, seller: { '@id': STORE_ID },
+        itemCondition: 'https://schema.org/NewCondition', shippingDetails: SHIP_FR, hasMerchantReturnPolicy: RETURNS, seller: { '@id': STORE_ID },
       })),
     }, crumbs([['Accueil', '/'], [c[1], catPath(d.type)], [name, url]])],
     body: `<p><a href="/">Accueil</a> › <a href="${catPath(d.type)}">${c[1]}</a></p>
@@ -133,11 +141,19 @@ const catPage = async (t) => {
 await catPage('');
 for (const c of CATS) await catPage(c[0]);
 
-/* legal pages */
-const pages = { 'mentions-legales': { title: 'Mentions légales', html: legalHTML() }, ...Object.fromEntries(POLICY_KEYS.map((k) => [k, policies[k]])) };
+/* information pages: the owner's own pages, legal notice, Shopify policies */
+const pages = {
+  ...Object.fromEntries(CONTENT_KEYS.map((k) => [k, content[k]])),
+  'mentions-legales': { title: 'Mentions légales', html: legalHTML() },
+  ...Object.fromEntries(POLICY_KEYS.map((k) => [k, policies[k]])),
+};
 for (const [k, p] of Object.entries(pages)) {
+  const schema = k === 'faq' ? [{
+    '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faqPairs(p.html).map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: strip(a) } })),
+  }] : [];
   await write(`page/${k}/index.html`, html({
-    title: `${p.title} | ${BIZ.name}`, desc: clip(strip(p.html)) || p.title, url: pagePath(k), image: data[1].cdn[0], script: 'page', body: `<h1>${p.title}</h1>${p.html}`,
+    title: `${p.title} | ${BIZ.name}`, desc: clip(strip(p.html)) || p.title, url: pagePath(k), image: data[1].cdn[0], script: 'page', schema, body: `<h1>${p.title}</h1>${p.html}`,
   }));
   urls.push([pagePath(k), new Date().toISOString()]);
 }

@@ -31,7 +31,7 @@ const facts = [
 const SH = ['', 'shape-d', 'shape-e', 'shape-b'];
 
 const rows = [
-  ['Livraison', 'Délai estimé : 10 à 15 jours. Les frais sont indiqués avant le paiement. Livraison dans 41 pays.', pagePath('shipping-policy'), 'Politique de livraison'],
+  ['Livraison', 'Délai estimé : 10 à 15 jours. France : livraison standard 7,99 €, option gratuite dès 60 € pour les produits éligibles. Livraison dans 41 pays.', pagePath('livraison-retours'), 'Livraison & retours'],
   ['Retours', 'Vous pouvez demander un retour dans les 30 jours suivant la livraison.', pagePath('refund-policy'), 'Politique de retour'],
   ['Paiement sécurisé', 'Le paiement se fait sur la caisse sécurisée Shopify.', '', '', payIcons()],
   ['Avis clients', 'Notre boutique est notée 5,0 sur 5 sur Google.', '', '', gstar()],

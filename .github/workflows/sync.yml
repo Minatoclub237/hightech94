@@ -1,0 +1,31 @@
+name: Synchroniser le catalogue Shopify
+
+# Chaque nuit : nouveaux produits, nouvelles photos, textes des pages. Les prix et le stock,
+# eux, sont déjà lus en direct par le site. Bouton « Run workflow » pour lancer tout de suite.
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: ${{ vars.SITE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run sync
+      - name: Enregistrer les changements (Vercel republie le site)
+        run: |
+          git config user.name "sync-catalogue"
+          git config user.email "sync-catalogue@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || (git commit -m "Catalogue Shopify synchronisé" && git push)
