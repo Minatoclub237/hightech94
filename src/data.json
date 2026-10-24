@@ -1,0 +1,422 @@
+[
+ {
+  "title": "Lunettes connectées avec caméra 8 MP, assistant vocal et traduction",
+  "handle": "lunettes-ia-4k-assistant-intelligent-camera-hd-8mp",
+  "type": "Lunettes connectées",
+  "min": 99,
+  "max": 99,
+  "variants": 1,
+  "tagline": "Filmez, photographiez et traduisez, sans sortir votre téléphone",
+  "images": [
+   "/img/lunettes-ia-4k-assistant-intelligent-cam-0.webp",
+   "/img/lunettes-ia-4k-assistant-intelligent-cam-1.webp",
+   "/img/lunettes-ia-4k-assistant-intelligent-cam-2.webp"
+  ]
+ },
+ {
+  "title": "Montre Connectée Kayrox Pro – Cardio, SpO2 & Appels Bluetooth",
+  "handle": "montre-connectee-kayrox-pro-cardio-spo2-appels-bluetooth",
+  "type": "Objets connectés",
+  "min": 75,
+  "max": 75,
+  "variants": 11,
+  "tagline": "Appels et notifications au poignet",
+  "images": [
+   "/img/montre-connectee-kayrox-pro-cardio-spo2--0.webp",
+   "/img/montre-connectee-kayrox-pro-cardio-spo2--1.webp",
+   "/img/montre-connectee-kayrox-pro-cardio-spo2--2.webp"
+  ]
+ },
+ {
+  "title": "Lunettes Bluetooth – appels, musique et déclenchement photo",
+  "handle": "black-technology-smart-bluetooth-glasses",
+  "type": "Lunettes connectées",
+  "min": 26.61,
+  "max": 26.61,
+  "variants": 1,
+  "tagline": "Vos appels et votre musique, depuis vos lunettes",
+  "images": [
+   "/img/black-technology-smart-bluetooth-glasses-0.webp",
+   "/img/black-technology-smart-bluetooth-glasses-1.webp",
+   "/img/black-technology-smart-bluetooth-glasses-2.webp"
+  ]
+ },
+ {
+  "title": "Lunettes Connectées Bluetooth G01-09 – Appels & Musique",
+  "handle": "g01-09-bluetooth-glasses-sunglasses-black-technology-can-call-to-listen-to-music-audio-smart-bluetooth-glasses",
+  "type": "Lunettes connectées",
+  "min": 24.32,
+  "max": 89.76,
+  "variants": 5,
+  "tagline": "",
+  "images": [
+   "/img/g01-09-bluetooth-glasses-sunglasses-blac-0.webp",
+   "/img/g01-09-bluetooth-glasses-sunglasses-blac-1.webp",
+   "/img/g01-09-bluetooth-glasses-sunglasses-blac-2.webp"
+  ]
+ },
+ {
+  "title": "Support Ventilé pour Ordinateur Portable et Tablette",
+  "handle": "cooling-laptop-desk-laptop-stand-tablet",
+  "type": "Bureau et informatique",
+  "min": 14.61,
+  "max": 16.47,
+  "variants": 16,
+  "tagline": "Installez votre ordinateur à votre façon",
+  "images": [
+   "/img/cooling-laptop-desk-laptop-stand-tablet-0.webp",
+   "/img/cooling-laptop-desk-laptop-stand-tablet-1.webp",
+   "/img/cooling-laptop-desk-laptop-stand-tablet-2.webp"
+  ]
+ },
+ {
+  "title": "Socle Ergonomique pour Magic Mouse",
+  "handle": "control-mouse-3-generation-ergonomic-base",
+  "type": "Bureau et informatique",
+  "min": 10.39,
+  "max": 10.39,
+  "variants": 2,
+  "tagline": "Une Magic Mouse plus agréable à tenir au bureau",
+  "images": [
+   "/img/control-mouse-3-generation-ergonomic-bas-0.webp",
+   "/img/control-mouse-3-generation-ergonomic-bas-1.webp",
+   "/img/control-mouse-3-generation-ergonomic-bas-2.webp"
+  ]
+ },
+ {
+  "title": "Table de Lit pour Ordinateur Portable",
+  "handle": "bed-computer-desk-desk-stand-stand-cooling-multifunctional-laptop",
+  "type": "Bureau et informatique",
+  "min": 15.97,
+  "max": 16.28,
+  "variants": 2,
+  "tagline": "",
+  "images": [
+   "/img/bed-computer-desk-desk-stand-stand-cooli-0.webp",
+   "/img/bed-computer-desk-desk-stand-stand-cooli-1.webp",
+   "/img/bed-computer-desk-desk-stand-stand-cooli-2.webp"
+  ]
+ },
+ {
+  "title": "Souris Verticale Sans Fil Rechargeable 2.4G",
+  "handle": "ergonomic-rechargeable-2-4g-wireless-vertical-mouse",
+  "type": "Bureau et informatique",
+  "min": 11.61,
+  "max": 12.87,
+  "variants": 2,
+  "tagline": "",
+  "images": [
+   "/img/ergonomic-rechargeable-2-4g-wireless-ver-0.webp",
+   "/img/ergonomic-rechargeable-2-4g-wireless-ver-1.webp",
+   "/img/ergonomic-rechargeable-2-4g-wireless-ver-2.webp"
+  ]
+ },
+ {
+  "title": "Souris Verticale Ergonomique",
+  "handle": "ergonomic-vertical-mouse",
+  "type": "Bureau et informatique",
+  "min": 20.25,
+  "max": 24.24,
+  "variants": 3,
+  "tagline": "Une souris verticale sans fil pour votre bureau",
+  "images": [
+   "/img/ergonomic-vertical-mouse-0.webp",
+   "/img/ergonomic-vertical-mouse-1.webp",
+   "/img/ergonomic-vertical-mouse-2.webp"
+  ]
+ },
+ {
+  "title": "Support Ordinateur Pliable en Bois",
+  "handle": "computer-stand-foldable-stand-book-desk-notebook-desk",
+  "type": "Bureau et informatique",
+  "min": 14.63,
+  "max": 14.63,
+  "variants": 1,
+  "tagline": "",
+  "images": [
+   "/img/computer-stand-foldable-stand-book-desk--0.webp",
+   "/img/computer-stand-foldable-stand-book-desk--1.webp",
+   "/img/computer-stand-foldable-stand-book-desk--2.webp"
+  ]
+ },
+ {
+  "title": "Chargeur Sans Fil avec Veilleuse",
+  "handle": "wireless-charger-1",
+  "type": "Charge et alimentation",
+  "min": 18.42,
+  "max": 18.42,
+  "variants": 6,
+  "tagline": "",
+  "images": [
+   "/img/wireless-charger-1-0.webp",
+   "/img/wireless-charger-1-1.webp",
+   "/img/wireless-charger-1-2.webp"
+  ]
+ },
+ {
+  "title": "Chargeur Sans Fil 3-en-1 Vancely PH19",
+  "handle": "vancely-ph19-wireless-charger-three-in-one",
+  "type": "Charge et alimentation",
+  "min": 14.61,
+  "max": 14.61,
+  "variants": 2,
+  "tagline": "",
+  "images": [
+   "/img/vancely-ph19-wireless-charger-three-in-o-0.webp",
+   "/img/vancely-ph19-wireless-charger-three-in-o-1.webp",
+   "/img/vancely-ph19-wireless-charger-three-in-o-2.webp"
+  ]
+ },
+ {
+  "title": "Chargeur Voiture Magnétique Compatible MagSafe",
+  "handle": "compatible-with-apple-car-magnetic-wireless-charging-magsafe-magnetic-wireless-charger",
+  "type": "Accessoires auto",
+  "min": 19.38,
+  "max": 19.38,
+  "variants": 1,
+  "tagline": "",
+  "images": [
+   "/img/compatible-with-apple-car-magnetic-wirel-0.webp",
+   "/img/compatible-with-apple-car-magnetic-wirel-1.webp",
+   "/img/compatible-with-apple-car-magnetic-wirel-2.webp"
+  ]
+ },
+ {
+  "title": "Chargeur Sans Fil Portable pour Montre Connectée",
+  "handle": "usb-wireless-charger-portable-watch-fast-charging",
+  "type": "Objets connectés",
+  "min": 10.42,
+  "max": 12.77,
+  "variants": 6,
+  "tagline": "",
+  "images": [
+   "/img/usb-wireless-charger-portable-watch-fast-0.webp",
+   "/img/usb-wireless-charger-portable-watch-fast-1.webp",
+   "/img/usb-wireless-charger-portable-watch-fast-2.webp"
+  ]
+ },
+ {
+  "title": "Chargeur Sans Fil Double Qi",
+  "handle": "wireless-charger",
+  "type": "Charge et alimentation",
+  "min": 15.65,
+  "max": 15.65,
+  "variants": 2,
+  "tagline": "",
+  "images": [
+   "/img/wireless-charger-0.webp",
+   "/img/wireless-charger-1.webp",
+   "/img/wireless-charger-2.webp"
+  ]
+ },
+ {
+  "title": "Support Voiture Magnétique pour Navigation",
+  "handle": "magnetic-car-accessory-navigation-mount",
+  "type": "Accessoires auto",
+  "min": 10.12,
+  "max": 10.12,
+  "variants": 4,
+  "tagline": "",
+  "images": [
+   "/img/magnetic-car-accessory-navigation-mount-0.webp",
+   "/img/magnetic-car-accessory-navigation-mount-1.webp",
+   "/img/magnetic-car-accessory-navigation-mount-2.webp"
+  ]
+ },
+ {
+  "title": "Support & Chargeur Sans Fil Magnétique Voiture",
+  "handle": "magnetic-wireless-car-charger-navigation-mount",
+  "type": "Charge et alimentation",
+  "min": 16.9,
+  "max": 18.33,
+  "variants": 2,
+  "tagline": "",
+  "images": [
+   "/img/magnetic-wireless-car-charger-navigation-0.webp",
+   "/img/magnetic-wireless-car-charger-navigation-1.webp",
+   "/img/magnetic-wireless-car-charger-navigation-2.webp"
+  ]
+ },
+ {
+  "title": "Support Voiture Chargeur Sans Fil - Grille d'Aération",
+  "handle": "mobile-phone-car-mount-wireless-charger-fast-charging-air-outlet",
+  "type": "Accessoires auto",
+  "min": 21.21,
+  "max": 21.21,
+  "variants": 4,
+  "tagline": "",
+  "images": [
+   "/img/mobile-phone-car-mount-wireless-charger--0.webp",
+   "/img/mobile-phone-car-mount-wireless-charger--1.webp",
+   "/img/mobile-phone-car-mount-wireless-charger--2.webp"
+  ]
+ },
+ {
+  "title": "Purificateur d'Air Connecté à Ions Négatifs",
+  "handle": "negative-ion-smart-home-air-purifier",
+  "type": "Air et ambiance",
+  "min": 13.62,
+  "max": 34.2,
+  "variants": 2,
+  "tagline": "",
+  "images": [
+   "/img/negative-ion-smart-home-air-purifier-0.webp",
+   "/img/negative-ion-smart-home-air-purifier-1.webp",
+   "/img/negative-ion-smart-home-air-purifier-2.webp"
+  ]
+ },
+ {
+  "title": "Purificateur d'Air Portable à Suspendre au Cou",
+  "handle": "portable-hanging-neck-air-purifier",
+  "type": "Air et ambiance",
+  "min": 18.63,
+  "max": 18.63,
+  "variants": 1,
+  "tagline": "",
+  "images": [
+   "/img/portable-hanging-neck-air-purifier-0.webp",
+   "/img/portable-hanging-neck-air-purifier-1.webp",
+   "/img/portable-hanging-neck-air-purifier-2.webp"
+  ]
+ },
+ {
+  "title": "Purificateur d'Air Auto à Ions Négatifs – Silencieux",
+  "handle": "purifier-air-disinfection-car-air-purifier-customization",
+  "type": "Air et ambiance",
+  "min": 31.75,
+  "max": 31.75,
+  "variants": 1,
+  "tagline": "",
+  "images": [
+   "/img/purifier-air-disinfection-car-air-purifi-0.webp",
+   "/img/purifier-air-disinfection-car-air-purifi-1.webp",
+   "/img/purifier-air-disinfection-car-air-purifi-2.webp"
+  ]
+ },
+ {
+  "title": "Purificateur d'Air Auto & Diffuseur d'Arômes",
+  "handle": "fashion-smart-car-air-purifier-aromatherapy",
+  "type": "Air et ambiance",
+  "min": 10.95,
+  "max": 19.34,
+  "variants": 5,
+  "tagline": "",
+  "images": [
+   "/img/fashion-smart-car-air-purifier-aromather-0.webp",
+   "/img/fashion-smart-car-air-purifier-aromather-1.webp",
+   "/img/fashion-smart-car-air-purifier-aromather-2.webp"
+  ]
+ },
+ {
+  "title": "Caméra de Surveillance WiFi HD Basse Consommation",
+  "handle": "low-power-wireless-camera-home-plug-in-free-wifi-remote-monitor-hd-smart-security",
+  "type": "Sécurité connectée",
+  "min": 18.63,
+  "max": 18.63,
+  "variants": 1,
+  "tagline": "",
+  "images": [
+   "/img/low-power-wireless-camera-home-plug-in-f-0.webp",
+   "/img/low-power-wireless-camera-home-plug-in-f-1.webp",
+   "/img/low-power-wireless-camera-home-plug-in-f-2.webp"
+  ]
+ },
+ {
+  "title": "Prise Connectée WiFi - Maison Intelligente",
+  "handle": "wifi-smart-plug-control-for-smart-homes",
+  "type": "Maison connectée",
+  "min": 14.2,
+  "max": 24.77,
+  "variants": 7,
+  "tagline": "",
+  "images": [
+   "/img/wifi-smart-plug-control-for-smart-homes-0.webp",
+   "/img/wifi-smart-plug-control-for-smart-homes-1.webp",
+   "/img/wifi-smart-plug-control-for-smart-homes-2.webp"
+  ]
+ },
+ {
+  "title": "Routeur WiFi Portable de Poche",
+  "handle": "portable-portable-plug-in-wifi-wireless-router",
+  "type": "Maison connectée",
+  "min": 30.24,
+  "max": 30.24,
+  "variants": 1,
+  "tagline": "",
+  "images": [
+   "/img/portable-portable-plug-in-wifi-wireless--0.webp",
+   "/img/portable-portable-plug-in-wifi-wireless--1.webp",
+   "/img/portable-portable-plug-in-wifi-wireless--2.webp"
+  ]
+ },
+ {
+  "title": "Caméra de Surveillance sur Batterie - Sans Perçage",
+  "handle": "battery-surveillance-camera-wireless-wifi-connection-mobile-phone-remote-plug-in-punch-free",
+  "type": "Sécurité connectée",
+  "min": 28.63,
+  "max": 35.06,
+  "variants": 6,
+  "tagline": "",
+  "images": [
+   "/img/battery-surveillance-camera-wireless-wif-0.webp",
+   "/img/battery-surveillance-camera-wireless-wif-1.webp",
+   "/img/battery-surveillance-camera-wireless-wif-2.webp"
+  ]
+ },
+ {
+  "title": "Mini Caméra WiFi F1 – Format Compact, Sans Installation",
+  "handle": "f1-camera-hd-plug-in-free-wireless-wifi-small-camera",
+  "type": "Sécurité connectée",
+  "min": 12.23,
+  "max": 12.23,
+  "variants": 1,
+  "tagline": "",
+  "images": [
+   "/img/f1-camera-hd-plug-in-free-wireless-wifi--0.webp",
+   "/img/f1-camera-hd-plug-in-free-wireless-wifi--1.webp",
+   "/img/f1-camera-hd-plug-in-free-wireless-wifi--2.webp"
+  ]
+ },
+ {
+  "title": "Ampoule Connectée RGB WiFi/Bluetooth - Dimmable",
+  "handle": "graffiti-wifi-bluetooth-smart-bulb-rgb-electrodeless-dimming",
+  "type": "Éclairage connecté",
+  "min": 9.96,
+  "max": 22.07,
+  "variants": 13,
+  "tagline": "",
+  "images": [
+   "/img/graffiti-wifi-bluetooth-smart-bulb-rgb-e-0.webp",
+   "/img/graffiti-wifi-bluetooth-smart-bulb-rgb-e-1.webp",
+   "/img/graffiti-wifi-bluetooth-smart-bulb-rgb-e-2.webp"
+  ]
+ },
+ {
+  "title": "Ampoule LED Connectée E14 RGB - Contrôle Vocal",
+  "handle": "smart-wifi-led-lamp-e14-rgb-cw-ww-led-bulb-dimmable-85-265v-voice-control-light-bulbs-alexa-google-home-for-home-decorative",
+  "type": "Éclairage connecté",
+  "min": 12.92,
+  "max": 12.92,
+  "variants": 1,
+  "tagline": "",
+  "images": [
+   "/img/smart-wifi-led-lamp-e14-rgb-cw-ww-led-bu-0.webp",
+   "/img/smart-wifi-led-lamp-e14-rgb-cw-ww-led-bu-1.webp",
+   "/img/smart-wifi-led-lamp-e14-rgb-cw-ww-led-bu-2.webp"
+  ]
+ },
+ {
+  "title": "Ampoule Caméra de Surveillance WiFi",
+  "handle": "bulb-camera-wireless-wifi-monitoring",
+  "type": "Sécurité connectée",
+  "min": 12.23,
+  "max": 17.91,
+  "variants": 7,
+  "tagline": "",
+  "images": [
+   "/img/bulb-camera-wireless-wifi-monitoring-0.webp",
+   "/img/bulb-camera-wireless-wifi-monitoring-1.webp",
+   "/img/bulb-camera-wireless-wifi-monitoring-2.webp"
+  ]
+ }
+]
