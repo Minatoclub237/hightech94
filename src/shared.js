@@ -326,6 +326,15 @@ export function shell(main) {
     s.innerHTML = `<span>${esc(s.dataset.t)}</span>`;
     n.replaceWith(s);
   });
+  // touch screens have no hover: each label rolls once as it scrolls into view
+  if (!matchMedia('(hover: hover)').matches && !reduce) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('rolled');
+      io.unobserve(e.target);
+    }), { threshold: 0.6 });
+    document.querySelectorAll('.roll').forEach((r) => io.observe(r.parentElement));
+  }
   const lenis = reduce ? null : new Lenis({ lerp: 0.1 });
   if (lenis) {
     lenis.on('scroll', ScrollTrigger.update);
@@ -465,9 +474,13 @@ export function shell(main) {
   // marquees: speed and direction follow the scroll
   const marqs = [...document.querySelectorAll('.marq')].map((m) => ({ el: m.firstElementChild, dir: m.hasAttribute('data-rev') ? 1 : -1, x: 0, w: 1 }));
   const measureMarq = () => marqs.forEach((m) => { m.w = m.el.scrollWidth / 2; });
+  // velocity read from the page itself: Lenis does not smooth touch scrolling, so its own
+  // velocity stays at 0 on phones and the strips would ignore the finger
+  let lastY = window.scrollY, flip = 1;
   gsap.ticker.add((t, dt) => {
-    const v = lenis ? lenis.velocity : 0;
-    const flip = lenis && lenis.direction < 0 ? -1 : 1;
+    const v = window.scrollY - lastY;
+    lastY = window.scrollY;
+    if (v) flip = v < 0 ? -1 : 1;
     for (const m of marqs) {
       m.x += m.dir * flip * (0.045 + Math.min(Math.abs(v), 60) * 0.012) * dt;
       if (m.x <= -m.w) m.x += m.w;

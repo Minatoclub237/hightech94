@@ -115,6 +115,9 @@ if (matchMedia('(hover: hover)').matches && !reduce) {
     rx((0.5 - (e.clientY - r.top) / r.height) * 8);
   });
   stage.addEventListener('pointerleave', () => { rx(0); ry(0); });
+} else if (!reduce) {
+  // touch: no cursor to follow, so the stage keeps the same 3D sway on its own
+  gsap.to(stage, { rotationY: 9, rotationX: -4, duration: 3.2, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.6 });
 }
 
 /* ---------------- variants, quantity, buy ---------------- */

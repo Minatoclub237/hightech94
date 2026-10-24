@@ -30,7 +30,7 @@ const lenis = shell(`
   <div class="hero__ch hero__ch--2"><p class="mono">[Kayrox Pro] — vue éclatée</p><p class="hero__chT">Cardio · SpO2 · Appels Bluetooth</p></div>
   <div class="hero__ch hero__ch--3l"><p class="mono">[Nouveauté 2026]</p><p class="hero__name">Montre connectée Kayrox Pro</p></div>
   <div class="hero__ch hero__ch--3r"><p class="hero__price">${priceTag(1)}</p><a class="pill pill--fill" href="${purl(1)}">Découvrir la montre ${I.arrow}</a></div>
-  <button class="hero__scroll mono" aria-label="Faire défiler la vidéo">Faites défiler<span></span></button>
+  <button class="hero__scroll mono" aria-label="Faire défiler la vidéo"><b class="hero__scrollW">Faites </b>défiler<i></i></button>
 </section>
 
 <div class="strip">${[['glasses', 0], ['watch', 1], ['bolt', 3], ['car', 4], ['shield', 6], ['home', 7]]

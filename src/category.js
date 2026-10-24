@@ -66,6 +66,14 @@ function render(first) {
       });
       el.addEventListener('pointerleave', () => { rx(0); ry(0); });
     });
+  } else if (!reduce) {
+    // touch: the same 3D tilt and second-photo swap, driven by the scroll instead of the cursor
+    grid.querySelectorAll('.pcard').forEach((el) => {
+      triggers.push(gsap.fromTo(el.querySelector('.pcard__img'), { rotationX: 12, rotationY: -6 }, {
+        rotationX: -12, rotationY: 6, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+      }));
+      triggers.push(ScrollTrigger.create({ trigger: el, start: 'top 55%', end: 'bottom 45%', toggleClass: 'is-hot' }));
+    });
   }
 }
 
