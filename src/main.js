@@ -1,6 +1,6 @@
 import {
   gsap, ScrollTrigger, data, reduce, img, purl, curl, price, short, count, pad2, I, CATS,
-  sliced, frame, layer, swap, marquee, carouselHTML, initCarousel, reveal, onResize, shell,
+  sliced, frame, layer, swap, split, marquee, carouselHTML, initCarousel, reveal, onResize, shell,
 } from './shared.js';
 
 const SPOT = [[0, 1], [1, 1], [2, 1], [4, 1], [5, 2], [8, 0]];
@@ -13,9 +13,9 @@ const COLS = [
 ];
 const firstSentence = (s) => s.split(/(?<=[.!?])\s/)[0];
 
-shell(`
-<section class="hero">
-  <div class="hero__fig"><div class="hero__tilt"><img src="${img(1, 0)}" alt="Montre connectée Kayrox Pro" fetchpriority="high" draggable="false"></div></div>
+const lenis = shell(`
+<section class="hero" data-pin>
+  <div class="hero__media"><video class="hero__video" muted playsinline preload="auto" poster="/video/hero-poster.webp" aria-label="Vue éclatée de la montre connectée Kayrox Pro"></video></div>
   <h1 class="hero__title">
     <span class="hero__l"><span class="ln"><span>la tech</span></span><span class="ln"><span>- utile</span></span></span>
     <span class="hero__r"><span class="ln"><span>la vie</span></span><span class="ln"><span>- facile</span></span></span>
@@ -27,6 +27,10 @@ shell(`
   <div class="hero__avatars" data-in>${[[3, 0], [7, 0], [12, 0]].map(([p, i]) => `<img src="${img(p, i)}" alt="" draggable="false">`).join('')}<span class="hero__more">${I.plus}</span></div>
   <span class="cross hero__cross" data-in>${I.plus}</span>
   <p class="hero__stat" data-in><strong>41</strong><span class="mono">pays livrés</span></p>
+  <div class="hero__ch hero__ch--2"><p class="mono">[Kayrox Pro] — vue éclatée</p><p class="hero__chT">Cardio · SpO2 · Appels Bluetooth</p></div>
+  <div class="hero__ch hero__ch--3l"><p class="mono">[Nouveauté 2026]</p><p class="hero__name">Montre connectée Kayrox Pro</p></div>
+  <div class="hero__ch hero__ch--3r"><p class="hero__price">${price(1)}</p><a class="pill pill--fill" href="${purl(1)}">Découvrir la montre ${I.arrow}</a></div>
+  <button class="hero__scroll mono" aria-label="Faire défiler la vidéo">Faites défiler<span></span></button>
 </section>
 
 <div class="strip">${[['glasses', 0], ['watch', 1], ['bolt', 3], ['car', 4], ['shield', 6], ['home', 7]]
@@ -44,7 +48,7 @@ shell(`
   <p class="moments__pct" data-blur>(${price(7)})</p>
 </section>
 
-<section class="cats" id="categories">
+<section class="cats" id="categories" data-pin>
   <div class="cats__l" data-blur>
     <p>Chaque objet a sa place : au bureau, en voiture, à la maison. Faites défiler pour choisir un univers.</p>
     <a class="pill cats__cta" href="${curl(CATS[0][0])}">Voir les produits ${I.arrow}</a>
@@ -100,31 +104,48 @@ ${marquee(true)}
     </li>`).join('')}</ul>
 </section>`);
 
-/* ---------------- hero ---------------- */
-const tilt = document.querySelector('.hero__tilt');
+/* ---------------- hero: exploded-view video scrubbed by the scroll (pinned) ---------------- */
 const hero = document.querySelector('.hero');
-gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.5 })
-  .fromTo('.hero .ln > span', { yPercent: 110 }, { yPercent: 0, duration: 1.4, stagger: 0.08 })
-  .fromTo(tilt, { scale: 1.12, opacity: 0, filter: 'blur(24px)' }, { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 1.8, clearProps: 'filter' }, 0.1)
-  .fromTo('.hero [data-in]', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1, stagger: 0.06 }, 0.5);
+const video = hero.querySelector('.hero__video');
+// whole file in memory so every seek is instant (no range requests while scrubbing)
+fetch(matchMedia('(max-width: 820px)').matches ? '/video/hero-720.mp4' : '/video/hero-1080.mp4')
+  .then((r) => r.blob()).then((b) => { video.src = URL.createObjectURL(b); });
+const vt = { target: 0, cur: -1 };
+gsap.ticker.add(() => {
+  if (video.readyState < 1 || video.seeking) return;
+  const t = Math.min(vt.target * video.duration, video.duration - 0.08); // the very last frame decodes black
+  if (Math.abs(t - vt.cur) > 0.01) { video.currentTime = t; vt.cur = t; }
+});
 
-const rx = gsap.quickTo(tilt, 'rotationX', { duration: 0.9, ease: 'power3' });
-const ry = gsap.quickTo(tilt, 'rotationY', { duration: 0.9, ease: 'power3' });
-if (matchMedia('(hover: hover)').matches) {
-  hero.addEventListener('pointermove', (e) => {
-    ry((e.clientX / innerWidth - 0.5) * 18);
-    rx((0.5 - e.clientY / innerHeight) * 10);
-  });
-  hero.addEventListener('pointerleave', () => { rx(0); ry(0); });
-} else if (!reduce) {
-  gsap.to(tilt, { rotationY: 10, duration: 3.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-}
-if (!reduce) {
-  gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } })
-    .to('.hero__fig', { yPercent: 18, ease: 'none' }, 0)
-    .to('.hero__l', { xPercent: -16, ease: 'none' }, 0)
-    .to('.hero__r', { xPercent: 16, ease: 'none' }, 0);
-}
+gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.5 })
+  .fromTo('.hero__media', { scale: 1.08, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.8 })
+  .fromTo('.hero .ln > span', { yPercent: 110 }, { yPercent: 0, duration: 1.4, stagger: 0.08 }, 0.1)
+  .fromTo('.hero [data-in], .hero__scroll', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1, stagger: 0.06 }, 0.5);
+
+// one timeline, same length as the video: title → exploded view caption → product + price
+const htl = gsap.timeline({
+  defaults: { ease: 'none' },
+  scrollTrigger: {
+    trigger: hero, start: 'top top', end: () => `+=${innerHeight * 3}`, pin: true, scrub: true, invalidateOnRefresh: true,
+    onUpdate: (s) => { vt.target = s.progress; },
+  },
+});
+const flip = (el) => (reduce ? [] : split(el));
+htl.to('.hero__scroll', { opacity: 0, duration: 0.04 }, 0.01)
+  .to('.hero [data-in]', { opacity: 0, y: -20, duration: 0.1, stagger: 0.008 }, 0.12)
+  .to('.hero__l', { xPercent: -60, opacity: 0, duration: 0.14 }, 0.16)
+  .to('.hero__r', { xPercent: 60, opacity: 0, duration: 0.14 }, 0.16)
+  .fromTo('.hero__ch--2', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.07 }, 0.34)
+  .fromTo(flip(document.querySelector('.hero__chT')), { yPercent: 110, rotationX: -90, opacity: 0 }, { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.08, stagger: 0.002 }, 0.35)
+  .to('.hero__ch--2', { opacity: 0, y: -30, duration: 0.06 }, 0.68)
+  .fromTo('.hero__ch--3l, .hero__ch--3r', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.08, stagger: 0.02 }, 0.76)
+  // letters done by 0.9 so the product name is fully readable before the page moves on
+  .fromTo(flip(document.querySelector('.hero__name')), { yPercent: 110, rotationX: -90, opacity: 0 }, { yPercent: 0, rotationX: 0, opacity: 1, duration: 0.08, stagger: 0.002 }, 0.77)
+  .to({}, { duration: 0.02 }, 0.98);
+hero.querySelector('.hero__scroll').addEventListener('click', () => {
+  const end = htl.scrollTrigger.end;
+  if (lenis) lenis.scrollTo(end, { duration: 4 }); else scrollTo(0, end);
+});
 
 /* ---------------- categories: 3D drum + one opaque photo layer per category ---------------- */
 const drum = document.querySelector('.drum');

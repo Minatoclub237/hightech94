@@ -186,16 +186,18 @@ export function split(el) {
 export function reveal(root = document) {
   if (reduce) return [];
   const made = [];
+  // inside a pinned section the positions must ignore the pin's extra scroll length
+  const pin = (el) => el.closest('[data-pin]') ?? undefined;
   root.querySelectorAll('[data-split]').forEach((el) => {
     made.push(gsap.fromTo(split(el), { yPercent: 110, rotationX: -90, opacity: 0 }, {
       yPercent: 0, rotationX: 0, opacity: 1, ease: 'power3.out', stagger: 0.015,
-      scrollTrigger: { trigger: el, start: 'top 92%', end: 'clamp(top 55%)', scrub: 0.6 },
+      scrollTrigger: { trigger: el, pinnedContainer: pin(el), start: 'top 92%', end: 'clamp(top 55%)', scrub: 0.6 },
     }));
   });
   root.querySelectorAll('[data-blur]').forEach((el) => {
     made.push(gsap.fromTo(el, { filter: 'blur(16px)', opacity: 0.15, y: 60 }, {
       filter: 'blur(0px)', opacity: 1, y: 0, ease: 'none',
-      scrollTrigger: { trigger: el, start: 'top bottom', end: 'clamp(top 80%)', scrub: 0.5 },
+      scrollTrigger: { trigger: el, pinnedContainer: pin(el), start: 'top bottom', end: 'clamp(top 80%)', scrub: 0.5 },
     }));
   });
   root.querySelectorAll('[data-sliced]').forEach((el) => {
@@ -417,7 +419,6 @@ export function shell(main) {
     if (u.pathname === location.pathname && u.search === location.search && u.hash) { scrollTo(u.hash); return; }
     gsap.fromTo(curtain, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'expo.inOut', onComplete: () => { location.href = u.href; } });
   });
-  if (location.hash) requestAnimationFrame(() => lenis ? lenis.scrollTo(location.hash, { immediate: true }) : null);
 
   document.querySelector('.foot__form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -439,6 +440,11 @@ export function shell(main) {
   });
   measureMarq();
   onResize(measureMarq);
-  document.fonts.ready.then(() => { measureMarq(); ScrollTrigger.refresh(); });
+  document.fonts.ready.then(() => {
+    measureMarq();
+    ScrollTrigger.refresh();
+    // jump to #anchor only once every pin of the page exists and has been measured
+    if (location.hash && document.querySelector(location.hash)) scrollTo(location.hash);
+  });
   return lenis;
 }
