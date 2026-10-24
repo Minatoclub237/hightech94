@@ -1,12 +1,12 @@
 {%- comment -%}
   Redirige l'ancien thème Shopify vers le nouveau site High Tech 94.
   À coller dans Boutique en ligne → Thèmes → … → Modifier le code → layout/theme.liquid,
-  juste après la balise <head>. Remplacer VOTRE-DOMAINE.fr par l'adresse du nouveau site.
+  juste après la balise <head>. Avec un nom de domaine définitif, remplacer l'adresse ci-dessous.
   Le panier, la caisse et le compte client restent sur Shopify (ils ne passent pas par le thème).
   Effet : le nom « High Tech » en haut de la page de paiement, les anciens liens Google et
   les liens partagés mènent tous vers la page équivalente du nouveau site.
 {%- endcomment -%}
-{%- assign nouveau_site = 'https://VOTRE-DOMAINE.fr' -%}
+{%- assign nouveau_site = 'https://hightech94.vercel.app' -%}
 {%- unless request.design_mode -%}
 <script>
   (function () {

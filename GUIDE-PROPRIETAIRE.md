@@ -13,7 +13,7 @@ Le site lit ces informations et envoie le client vers la caisse Shopify au momen
 2. **Vercel** (gratuit) : connectez-vous sur vercel.com avec votre compte GitHub →
    *Add New → Project* → choisissez le dépôt `hightech94`.
    - Framework : **Vite** · Commande : `npm run build` · Dossier de sortie : `dist`
-   - Variable d'environnement : `SITE_URL` = l'adresse de votre site, par ex. `https://hightech94.fr`
+   - Variable d’environnement `SITE_URL` : inutile tant que le site reste sur hightech94.vercel.app ; à créer avec votre domaine définitif (ex. `https://hightech94.fr`)
    - Cliquez sur **Deploy**.
 3. **Nom de domaine** : achetez-le (OVH, Gandi… environ 10 € par an), puis dans Vercel →
    *Settings → Domains* → ajoutez-le et suivez les deux réglages DNS indiqués.
@@ -26,7 +26,7 @@ Le site lit ces informations et envoie le client vers la caisse Shopify au momen
 |---|---|---|
 | Paramètres → Détails de la boutique | Nom : **High Tech 94** | C'est le nom affiché en haut de la page de paiement |
 | Paramètres → Paiement → Personnaliser | Logo : `public/brand/checkout-logo.png` · Fond blanc `#FFFFFF`, secondaire `#F4F4F4`, boutons `#0D0D0D`, accent `#FF5B1F` · Police : Inter | La caisse a le même style que le site |
-| Boutique en ligne → Thèmes → … → Modifier le code → `layout/theme.liquid` | Collez le contenu de `shopify/redirection-theme.liquid` juste après `<head>`, remplacez `VOTRE-DOMAINE.fr`, enregistrez | Le nom de la boutique en haut de la caisse et tous les anciens liens mènent au nouveau site, plus jamais à l'ancien |
+| Boutique en ligne → Thèmes → … → Modifier le code → `layout/theme.liquid` | Collez le contenu de `shopify/redirection-theme.liquid` juste après `<head>`, enregistrez (l’adresse hightech94.vercel.app y est déjà ; à changer seulement avec un domaine définitif) | Le nom de la boutique en haut de la caisse et tous les anciens liens mènent au nouveau site, plus jamais à l'ancien |
 | Paramètres → Politiques | Remplacez les modèles « EXEMPLE » (conditions d'utilisation, confidentialité) par vos textes *Conditions de vente* et *Confidentialité* | Ces liens apparaissent en bas de la page de paiement |
 | Fiche Google (business.google.com) | Site Web : votre nouveau domaine | La fiche pointe encore vers l'adresse myshopify |
 

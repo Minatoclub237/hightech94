@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://hightech94.vercel.app/sitemap.xml

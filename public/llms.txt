@@ -7,55 +7,55 @@
 - Note Google : 5,0/5 (https://www.google.com/maps?cid=5817617384683969146)
 
 ## Catégories
-- [Lunettes](/categorie/lunettes/) : Appels, musique, photo et traduction : des lunettes qui en font plus.
-- [Montres](/categorie/montres/) : Une montre connectée complète et un chargeur sans fil à emporter.
-- [Bureau](/categorie/bureau/) : Supports, souris verticales et tables pour travailler sans mal de dos.
-- [Recharge](/categorie/recharge/) : Chargeurs sans fil et stations 3-en-1 pour garder tout l’équipement chargé.
-- [Auto](/categorie/auto/) : Supports magnétiques et chargeurs pour garder le téléphone à portée de vue.
-- [Air pur](/categorie/air-pur/) : Purificateurs à ions négatifs pour la maison, la voiture ou à porter autour du cou.
-- [Sécurité](/categorie/securite/) : Caméras WiFi sans perçage, sur batterie ou cachées dans une ampoule.
-- [Maison](/categorie/maison/) : Prise connectée et routeur de poche : la maison pilotée depuis le téléphone.
-- [Lumière](/categorie/lumiere/) : Ampoules RGB pilotables à la voix ou depuis l’application.
+- [Lunettes](https://hightech94.vercel.app/categorie/lunettes/) : Appels, musique, photo et traduction : des lunettes qui en font plus.
+- [Montres](https://hightech94.vercel.app/categorie/montres/) : Une montre connectée complète et un chargeur sans fil à emporter.
+- [Bureau](https://hightech94.vercel.app/categorie/bureau/) : Supports, souris verticales et tables pour travailler sans mal de dos.
+- [Recharge](https://hightech94.vercel.app/categorie/recharge/) : Chargeurs sans fil et stations 3-en-1 pour garder tout l’équipement chargé.
+- [Auto](https://hightech94.vercel.app/categorie/auto/) : Supports magnétiques et chargeurs pour garder le téléphone à portée de vue.
+- [Air pur](https://hightech94.vercel.app/categorie/air-pur/) : Purificateurs à ions négatifs pour la maison, la voiture ou à porter autour du cou.
+- [Sécurité](https://hightech94.vercel.app/categorie/securite/) : Caméras WiFi sans perçage, sur batterie ou cachées dans une ampoule.
+- [Maison](https://hightech94.vercel.app/categorie/maison/) : Prise connectée et routeur de poche : la maison pilotée depuis le téléphone.
+- [Lumière](https://hightech94.vercel.app/categorie/lumiere/) : Ampoules RGB pilotables à la voix ou depuis l’application.
 
 ## Produits
-- [Lunettes connectées avec caméra 8 MP](/produit/lunettes-ia-4k-assistant-intelligent-camera-hd-8mp/) — 99 € (Lunettes) : Filmez, photographiez et traduisez, sans sortir votre téléphone
-- [Montre Connectée Kayrox Pro](/produit/montre-connectee-kayrox-pro-cardio-spo2-appels-bluetooth/) — 75 € (Montres) : Appels et notifications au poignet
-- [Lunettes Bluetooth](/produit/black-technology-smart-bluetooth-glasses/) — 26,61 € (Lunettes) : Vos appels et votre musique, depuis vos lunettes
-- [Lunettes Connectées Bluetooth G01-09](/produit/g01-09-bluetooth-glasses-sunglasses-black-technology-can-call-to-listen-to-music-audio-smart-bluetooth-glasses/) — dès 24,32 € (Lunettes)
-- [Support Ventilé pour Ordinateur Portable et Tablette](/produit/cooling-laptop-desk-laptop-stand-tablet/) — dès 14,61 € (Bureau) : Installez votre ordinateur à votre façon
-- [Socle Ergonomique pour Magic Mouse](/produit/control-mouse-3-generation-ergonomic-base/) — 10,39 € (Bureau) : Une Magic Mouse plus agréable à tenir au bureau
-- [Table de Lit pour Ordinateur Portable](/produit/bed-computer-desk-desk-stand-stand-cooling-multifunctional-laptop/) — dès 15,97 € (Bureau)
-- [Souris Verticale Sans Fil Rechargeable 2.4G](/produit/ergonomic-rechargeable-2-4g-wireless-vertical-mouse/) — dès 11,61 € (Bureau)
-- [Souris Verticale Ergonomique](/produit/ergonomic-vertical-mouse/) — dès 20,25 € (Bureau) : Une souris verticale sans fil pour votre bureau
-- [Support Ordinateur Pliable en Bois](/produit/computer-stand-foldable-stand-book-desk-notebook-desk/) — 14,63 € (Bureau)
-- [Chargeur Sans Fil avec Veilleuse](/produit/wireless-charger-1/) — 18,42 € (Recharge)
-- [Chargeur Sans Fil 3-en-1 Vancely PH19](/produit/vancely-ph19-wireless-charger-three-in-one/) — 14,61 € (Recharge)
-- [Chargeur Voiture Magnétique Compatible MagSafe](/produit/compatible-with-apple-car-magnetic-wireless-charging-magsafe-magnetic-wireless-charger/) — 19,38 € (Auto)
-- [Chargeur Sans Fil Portable pour Montre Connectée](/produit/usb-wireless-charger-portable-watch-fast-charging/) — dès 10,42 € (Montres)
-- [Chargeur Sans Fil Double Qi](/produit/wireless-charger/) — 15,65 € (Recharge)
-- [Support Voiture Magnétique pour Navigation](/produit/magnetic-car-accessory-navigation-mount/) — 10,12 € (Auto)
-- [Support & Chargeur Sans Fil Magnétique Voiture](/produit/magnetic-wireless-car-charger-navigation-mount/) — dès 16,90 € (Recharge)
-- [Support Voiture Chargeur Sans Fil](/produit/mobile-phone-car-mount-wireless-charger-fast-charging-air-outlet/) — 21,21 € (Auto)
-- [Purificateur d'Air Connecté à Ions Négatifs](/produit/negative-ion-smart-home-air-purifier/) — dès 13,62 € (Air pur)
-- [Purificateur d'Air Portable à Suspendre au Cou](/produit/portable-hanging-neck-air-purifier/) — 18,63 € (Air pur)
-- [Purificateur d'Air Auto à Ions Négatifs](/produit/purifier-air-disinfection-car-air-purifier-customization/) — 31,75 € (Air pur)
-- [Purificateur d'Air Auto & Diffuseur d'Arômes](/produit/fashion-smart-car-air-purifier-aromatherapy/) — dès 10,95 € (Air pur)
-- [Caméra de Surveillance WiFi HD Basse Consommation](/produit/low-power-wireless-camera-home-plug-in-free-wifi-remote-monitor-hd-smart-security/) — 18,63 € (Sécurité)
-- [Prise Connectée WiFi](/produit/wifi-smart-plug-control-for-smart-homes/) — dès 14,20 € (Maison)
-- [Routeur WiFi Portable de Poche](/produit/portable-portable-plug-in-wifi-wireless-router/) — 30,24 € (Maison)
-- [Caméra de Surveillance sur Batterie](/produit/battery-surveillance-camera-wireless-wifi-connection-mobile-phone-remote-plug-in-punch-free/) — dès 28,63 € (Sécurité)
-- [Mini Caméra WiFi F1](/produit/f1-camera-hd-plug-in-free-wireless-wifi-small-camera/) — 12,23 € (Sécurité)
-- [Ampoule Connectée RGB WiFi/Bluetooth](/produit/graffiti-wifi-bluetooth-smart-bulb-rgb-electrodeless-dimming/) — dès 9,96 € (Lumière)
-- [Ampoule LED Connectée E14 RGB](/produit/smart-wifi-led-lamp-e14-rgb-cw-ww-led-bulb-dimmable-85-265v-voice-control-light-bulbs-alexa-google-home-for-home-decorative/) — 12,92 € (Lumière)
-- [Ampoule Caméra de Surveillance WiFi](/produit/bulb-camera-wireless-wifi-monitoring/) — dès 12,23 € (Sécurité)
+- [Lunettes connectées avec caméra 8 MP](https://hightech94.vercel.app/produit/lunettes-ia-4k-assistant-intelligent-camera-hd-8mp/) — 99 € (Lunettes) : Filmez, photographiez et traduisez, sans sortir votre téléphone
+- [Montre Connectée Kayrox Pro](https://hightech94.vercel.app/produit/montre-connectee-kayrox-pro-cardio-spo2-appels-bluetooth/) — 75 € (Montres) : Appels et notifications au poignet
+- [Lunettes Bluetooth](https://hightech94.vercel.app/produit/black-technology-smart-bluetooth-glasses/) — 26,61 € (Lunettes) : Vos appels et votre musique, depuis vos lunettes
+- [Lunettes Connectées Bluetooth G01-09](https://hightech94.vercel.app/produit/g01-09-bluetooth-glasses-sunglasses-black-technology-can-call-to-listen-to-music-audio-smart-bluetooth-glasses/) — dès 24,32 € (Lunettes)
+- [Support Ventilé pour Ordinateur Portable et Tablette](https://hightech94.vercel.app/produit/cooling-laptop-desk-laptop-stand-tablet/) — dès 14,61 € (Bureau) : Installez votre ordinateur à votre façon
+- [Socle Ergonomique pour Magic Mouse](https://hightech94.vercel.app/produit/control-mouse-3-generation-ergonomic-base/) — 10,39 € (Bureau) : Une Magic Mouse plus agréable à tenir au bureau
+- [Table de Lit pour Ordinateur Portable](https://hightech94.vercel.app/produit/bed-computer-desk-desk-stand-stand-cooling-multifunctional-laptop/) — dès 15,97 € (Bureau)
+- [Souris Verticale Sans Fil Rechargeable 2.4G](https://hightech94.vercel.app/produit/ergonomic-rechargeable-2-4g-wireless-vertical-mouse/) — dès 11,61 € (Bureau)
+- [Souris Verticale Ergonomique](https://hightech94.vercel.app/produit/ergonomic-vertical-mouse/) — dès 20,25 € (Bureau) : Une souris verticale sans fil pour votre bureau
+- [Support Ordinateur Pliable en Bois](https://hightech94.vercel.app/produit/computer-stand-foldable-stand-book-desk-notebook-desk/) — 14,63 € (Bureau)
+- [Chargeur Sans Fil avec Veilleuse](https://hightech94.vercel.app/produit/wireless-charger-1/) — 18,42 € (Recharge)
+- [Chargeur Sans Fil 3-en-1 Vancely PH19](https://hightech94.vercel.app/produit/vancely-ph19-wireless-charger-three-in-one/) — 14,61 € (Recharge)
+- [Chargeur Voiture Magnétique Compatible MagSafe](https://hightech94.vercel.app/produit/compatible-with-apple-car-magnetic-wireless-charging-magsafe-magnetic-wireless-charger/) — 19,38 € (Auto)
+- [Chargeur Sans Fil Portable pour Montre Connectée](https://hightech94.vercel.app/produit/usb-wireless-charger-portable-watch-fast-charging/) — dès 10,42 € (Montres)
+- [Chargeur Sans Fil Double Qi](https://hightech94.vercel.app/produit/wireless-charger/) — 15,65 € (Recharge)
+- [Support Voiture Magnétique pour Navigation](https://hightech94.vercel.app/produit/magnetic-car-accessory-navigation-mount/) — 10,12 € (Auto)
+- [Support & Chargeur Sans Fil Magnétique Voiture](https://hightech94.vercel.app/produit/magnetic-wireless-car-charger-navigation-mount/) — dès 16,90 € (Recharge)
+- [Support Voiture Chargeur Sans Fil](https://hightech94.vercel.app/produit/mobile-phone-car-mount-wireless-charger-fast-charging-air-outlet/) — 21,21 € (Auto)
+- [Purificateur d'Air Connecté à Ions Négatifs](https://hightech94.vercel.app/produit/negative-ion-smart-home-air-purifier/) — dès 13,62 € (Air pur)
+- [Purificateur d'Air Portable à Suspendre au Cou](https://hightech94.vercel.app/produit/portable-hanging-neck-air-purifier/) — 18,63 € (Air pur)
+- [Purificateur d'Air Auto à Ions Négatifs](https://hightech94.vercel.app/produit/purifier-air-disinfection-car-air-purifier-customization/) — 31,75 € (Air pur)
+- [Purificateur d'Air Auto & Diffuseur d'Arômes](https://hightech94.vercel.app/produit/fashion-smart-car-air-purifier-aromatherapy/) — dès 10,95 € (Air pur)
+- [Caméra de Surveillance WiFi HD Basse Consommation](https://hightech94.vercel.app/produit/low-power-wireless-camera-home-plug-in-free-wifi-remote-monitor-hd-smart-security/) — 18,63 € (Sécurité)
+- [Prise Connectée WiFi](https://hightech94.vercel.app/produit/wifi-smart-plug-control-for-smart-homes/) — dès 14,20 € (Maison)
+- [Routeur WiFi Portable de Poche](https://hightech94.vercel.app/produit/portable-portable-plug-in-wifi-wireless-router/) — 30,24 € (Maison)
+- [Caméra de Surveillance sur Batterie](https://hightech94.vercel.app/produit/battery-surveillance-camera-wireless-wifi-connection-mobile-phone-remote-plug-in-punch-free/) — dès 28,63 € (Sécurité)
+- [Mini Caméra WiFi F1](https://hightech94.vercel.app/produit/f1-camera-hd-plug-in-free-wireless-wifi-small-camera/) — 12,23 € (Sécurité)
+- [Ampoule Connectée RGB WiFi/Bluetooth](https://hightech94.vercel.app/produit/graffiti-wifi-bluetooth-smart-bulb-rgb-electrodeless-dimming/) — dès 9,96 € (Lumière)
+- [Ampoule LED Connectée E14 RGB](https://hightech94.vercel.app/produit/smart-wifi-led-lamp-e14-rgb-cw-ww-led-bulb-dimmable-85-265v-voice-control-light-bulbs-alexa-google-home-for-home-decorative/) — 12,92 € (Lumière)
+- [Ampoule Caméra de Surveillance WiFi](https://hightech94.vercel.app/produit/bulb-camera-wireless-wifi-monitoring/) — dès 12,23 € (Sécurité)
 
 ## Informations
-- [À propos de High Tech](/page/a-propos/)
-- [FAQ - Questions Fréquentes](/page/faq/)
-- [Livraison &amp; Retours](/page/livraison-retours/)
-- [Confiance &amp; Sécurité](/page/confiance/)
-- [Informations et conditions de vente](/page/conditions-de-vente/)
-- [Confidentialité et données personnelles](/page/confidentialite-donnees/)
-- [Mentions légales](/page/mentions-legales/)
-- [Politique d’expédition](/page/shipping-policy/)
-- [Politique de remboursement](/page/refund-policy/)
+- [À propos de High Tech](https://hightech94.vercel.app/page/a-propos/)
+- [FAQ - Questions Fréquentes](https://hightech94.vercel.app/page/faq/)
+- [Livraison &amp; Retours](https://hightech94.vercel.app/page/livraison-retours/)
+- [Confiance &amp; Sécurité](https://hightech94.vercel.app/page/confiance/)
+- [Informations et conditions de vente](https://hightech94.vercel.app/page/conditions-de-vente/)
+- [Confidentialité et données personnelles](https://hightech94.vercel.app/page/confidentialite-donnees/)
+- [Mentions légales](https://hightech94.vercel.app/page/mentions-legales/)
+- [Politique d’expédition](https://hightech94.vercel.app/page/shipping-policy/)
+- [Politique de remboursement](https://hightech94.vercel.app/page/refund-policy/)

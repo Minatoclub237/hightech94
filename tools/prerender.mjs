@@ -1,4 +1,4 @@
-// Usage: node tools/prerender.mjs        (SITE_URL=https://votre-domaine.fr for absolute URLs + sitemap)
+// Usage: node tools/prerender.mjs        (SITE_URL=https://autre-domaine.fr to override https://hightech94.vercel.app)
 // Writes one HTML entry per page (home, every product, every category, legal pages) with its own
 // title, description, Open Graph tags, schema.org JSON-LD and a plain-HTML copy of the content
 // for crawlers that do not run JavaScript; also public/robots.txt, sitemap.xml and llms.txt.
@@ -9,7 +9,7 @@ import { BIZ, CATS, POLICY_KEYS, CONTENT_KEYS, SHIPPING, eur, shortTitle, produc
 const root = path.resolve(import.meta.dirname, '..');
 const data = JSON.parse(await fs.readFile(path.join(root, 'src/data.json'), 'utf8'));
 const policies = JSON.parse(await fs.readFile(path.join(root, 'src/policies.json'), 'utf8'));
-const SITE = (process.env.SITE_URL || '').replace(/\/$/, '');
+const SITE = (process.env.SITE_URL || 'https://hightech94.vercel.app').replace(/\/$/, '');
 const abs = (p) => SITE + p;
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const strip = (h) => h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
