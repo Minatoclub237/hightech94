@@ -52,8 +52,8 @@
 ## Informations
 - [À propos de High Tech](https://hightech94.vercel.app/page/a-propos/)
 - [FAQ - Questions Fréquentes](https://hightech94.vercel.app/page/faq/)
-- [Livraison &amp; Retours](https://hightech94.vercel.app/page/livraison-retours/)
-- [Confiance &amp; Sécurité](https://hightech94.vercel.app/page/confiance/)
+- [Livraison & Retours](https://hightech94.vercel.app/page/livraison-retours/)
+- [Confiance & Sécurité](https://hightech94.vercel.app/page/confiance/)
 - [Informations et conditions de vente](https://hightech94.vercel.app/page/conditions-de-vente/)
 - [Confidentialité et données personnelles](https://hightech94.vercel.app/page/confidentialite-donnees/)
 - [Mentions légales](https://hightech94.vercel.app/page/mentions-legales/)
